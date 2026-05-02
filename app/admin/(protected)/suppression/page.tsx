@@ -1,5 +1,4 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { mockUnsubscribes } from "@/lib/admin/mock";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
 import {
@@ -14,16 +13,13 @@ export const metadata = { title: "Suppression" };
 
 export default async function SuppressionPage() {
   const supabase = createSupabaseServerClient();
-  let rows: Unsubscribe[] = [];
-  if (supabase) {
-    const { data } = await supabase
-      .from("unsubscribes")
-      .select("*")
-      .order("created_at", { ascending: false });
-    rows = (data ?? []) as Unsubscribe[];
-  } else {
-    rows = mockUnsubscribes;
-  }
+  if (!supabase) return null;
+
+  const { data } = await supabase
+    .from("unsubscribes")
+    .select("*")
+    .order("created_at", { ascending: false });
+  const rows = (data ?? []) as Unsubscribe[];
 
   return (
     <div className="space-y-8">

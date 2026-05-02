@@ -3,6 +3,7 @@ import { ZodError } from "zod";
 import { leadSchema } from "@/lib/validation";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
 import { rateLimit } from "@/lib/rate-limit";
+import { sendLeadNotification } from "@/lib/mailer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -100,6 +101,22 @@ export async function POST(request: Request) {
       { error: "Could not save your request. Please try again." },
       { status: 500 }
     );
+  }
+
+  // Fire off the notification email. Failures here are logged but don't fail
+  // the request — the lead is already in the database.
+  const mailResult = await sendLeadNotification({
+    name: parsed.name,
+    email: parsed.email.toLowerCase(),
+    phone: parsed.phone ?? null,
+    company: parsed.company ?? null,
+    websiteUrl: parsed.website_url ?? null,
+    niche: parsed.niche ?? null,
+    goal: parsed.goal,
+    source: "website",
+  });
+  if (!mailResult.ok && mailResult.reason !== "not_configured") {
+    console.warn("[/api/leads] notification email failed", mailResult);
   }
 
   return NextResponse.json({ ok: true, stored: true });

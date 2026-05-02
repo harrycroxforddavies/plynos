@@ -14,13 +14,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://plynos.dev";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Plynos. Custom websites, built fast.",
+    default: "Plynos",
     template: "%s. Plynos",
   },
   description:
     "A custom website for your business, built fast. No template feel. Clean handover.",
   openGraph: {
-    title: "Plynos. Custom websites, built fast.",
+    title: "Plynos",
     description:
       "A custom website for your business, built fast. No template feel. Clean handover.",
     url: siteUrl,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Plynos. Custom websites, built fast.",
+    title: "Plynos",
     description:
       "A custom website for your business, built fast. No template feel. Clean handover.",
   },

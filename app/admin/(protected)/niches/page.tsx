@@ -1,5 +1,4 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { mockNiches } from "@/lib/admin/mock";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
 import { NewNicheForm } from "@/components/admin/niches/NewNicheForm";
@@ -12,16 +11,13 @@ export const metadata = { title: "Niches" };
 
 export default async function NichesPage() {
   const supabase = createSupabaseServerClient();
-  let niches: Niche[] = [];
-  if (supabase) {
-    const { data } = await supabase
-      .from("niches")
-      .select("*")
-      .order("created_at", { ascending: false });
-    niches = (data ?? []) as Niche[];
-  } else {
-    niches = mockNiches;
-  }
+  if (!supabase) return null;
+
+  const { data } = await supabase
+    .from("niches")
+    .select("*")
+    .order("created_at", { ascending: false });
+  const niches = (data ?? []) as Niche[];
 
   return (
     <div className="space-y-8">

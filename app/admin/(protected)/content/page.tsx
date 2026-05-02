@@ -1,5 +1,4 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { mockContent } from "@/lib/admin/mock";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
 import { NewContentForm } from "@/components/admin/content/NewContentForm";
@@ -15,16 +14,13 @@ export const metadata = { title: "Content" };
 
 export default async function ContentPage() {
   const supabase = createSupabaseServerClient();
-  let posts: ContentPost[] = [];
-  if (supabase) {
-    const { data } = await supabase
-      .from("content_posts")
-      .select("*")
-      .order("created_at", { ascending: false });
-    posts = (data ?? []) as ContentPost[];
-  } else {
-    posts = mockContent;
-  }
+  if (!supabase) return null;
+
+  const { data } = await supabase
+    .from("content_posts")
+    .select("*")
+    .order("created_at", { ascending: false });
+  const posts = (data ?? []) as ContentPost[];
 
   return (
     <div className="space-y-8">

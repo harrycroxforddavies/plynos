@@ -1,6 +1,5 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getDashboardMetrics } from "@/lib/admin/metrics";
-import { getMockDashboardMetrics } from "@/lib/admin/mock";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Stat } from "@/components/admin/Stat";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
@@ -15,9 +14,8 @@ export const metadata = {
 
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();
-  const metrics = supabase
-    ? await getDashboardMetrics(supabase)
-    : getMockDashboardMetrics();
+  if (!supabase) return null;
+  const metrics = await getDashboardMetrics(supabase);
 
   return (
     <div className="space-y-8">

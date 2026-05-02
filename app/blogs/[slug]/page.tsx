@@ -5,7 +5,9 @@ import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Drift } from "@/components/site/Drift";
-import { blogPosts, findPostBySlug } from "@/lib/blogs";
+import { blogPosts, findPostBySlug, localize } from "@/lib/blogs";
+import { getLang } from "@/lib/i18n/lang";
+import { t } from "@/lib/i18n/translations";
 
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
@@ -14,9 +16,10 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const post = findPostBySlug(params.slug);
   if (!post) return {};
+  // Default to EN for metadata since meta is server-emitted at request time
   return {
-    title: post.title,
-    description: post.excerpt,
+    title: post.title.en,
+    description: post.excerpt.en,
   };
 }
 
@@ -28,39 +31,40 @@ export default function BlogPostPage({
   const post = findPostBySlug(params.slug);
   if (!post) notFound();
 
-  // Pick "next read" — first other post in the list
+  const lang = getLang();
+  const ui = t(lang).blogsPost;
   const next = blogPosts.find((p) => p.slug !== post.slug);
 
   return (
     <>
       <SiteHeader />
       <main className="bg-white">
-        <article className="container-page py-16 md:py-24">
+        <article className="container-page py-20 md:py-28">
           <div className="max-w-3xl">
             <Drift>
               <div className="flex items-center gap-3 text-xs">
                 <span className="rounded-full border border-plynos-navy/10 bg-plynos-soft/50 px-2 py-0.5 font-medium text-plynos-slate">
-                  {post.tag}
+                  {localize(post.tag, lang)}
                 </span>
-                <span className="text-plynos-slate">{post.read}</span>
+                <span className="text-plynos-slate">{localize(post.read, lang)}</span>
               </div>
               <h1 className="mt-6 text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl">
-                {post.title}
+                {localize(post.title, lang)}
               </h1>
               <p className="mt-6 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl">
-                {post.excerpt}
+                {localize(post.excerpt, lang)}
               </p>
             </Drift>
           </div>
 
-          <div className="mt-12 overflow-hidden rounded-2xl border border-plynos-navy/10 md:mt-16">
-            <div className="relative aspect-[16/7] w-full">
+          <div className="mt-12 max-w-md overflow-hidden rounded-2xl border border-plynos-navy/10 md:mt-16">
+            <div className="relative aspect-square w-full">
               <Image
                 src={post.image}
                 alt=""
                 fill
                 unoptimized
-                className="object-cover"
+                className="object-contain"
                 aria-hidden
               />
             </div>
@@ -74,7 +78,7 @@ export default function BlogPostPage({
                     key={i}
                     className="mt-10 text-balance text-2xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-3xl"
                   >
-                    {block.text}
+                    {localize(block.text, lang)}
                   </h2>
                 );
               }
@@ -83,7 +87,7 @@ export default function BlogPostPage({
                   key={i}
                   className="text-base leading-relaxed text-plynos-slate md:text-lg"
                 >
-                  {block.text}
+                  {localize(block.text, lang)}
                 </p>
               );
             })}
@@ -91,14 +95,12 @@ export default function BlogPostPage({
 
           {next ? (
             <div className="mt-20 max-w-2xl border-t border-plynos-navy/10 pt-10 md:mt-28">
-              <p className="text-xs font-medium text-plynos-slate">
-                Read next
-              </p>
+              <p className="text-xs font-medium text-plynos-slate">{ui.readNext}</p>
               <Link
                 href={`/blogs/${next.slug}`}
                 className="mt-3 inline-flex items-baseline gap-2 text-balance text-2xl font-semibold !leading-tight tracking-tightish text-plynos-navy hover:text-plynos-blue md:text-3xl"
               >
-                {next.title}
+                {localize(next.title, lang)}
                 <ArrowUpRight className="h-5 w-5 flex-none translate-y-1" />
               </Link>
             </div>
@@ -109,7 +111,7 @@ export default function BlogPostPage({
               href="/blogs"
               className="text-sm font-medium text-plynos-slate hover:text-plynos-navy"
             >
-              All posts
+              {ui.allPosts}
             </Link>
           </div>
         </article>

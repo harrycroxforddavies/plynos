@@ -1,5 +1,4 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { mockCampaigns, mockNiches } from "@/lib/admin/mock";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
 import { NewCampaignForm } from "@/components/admin/campaigns/NewCampaignForm";
@@ -15,19 +14,14 @@ export const metadata = { title: "Campaigns" };
 
 export default async function CampaignsPage() {
   const supabase = createSupabaseServerClient();
-  let rows: Campaign[] = [];
-  let niches: { id: string; name: string }[] = [];
-  if (supabase) {
-    const [campaignsRes, nichesRes] = await Promise.all([
-      supabase.from("campaigns").select("*").order("created_at", { ascending: false }),
-      supabase.from("niches").select("id,name").order("name"),
-    ]);
-    rows = (campaignsRes.data ?? []) as Campaign[];
-    niches = (nichesRes.data ?? []).map((n) => ({ id: n.id, name: n.name }));
-  } else {
-    rows = mockCampaigns;
-    niches = mockNiches.map((n) => ({ id: n.id, name: n.name }));
-  }
+  if (!supabase) return null;
+
+  const [campaignsRes, nichesRes] = await Promise.all([
+    supabase.from("campaigns").select("*").order("created_at", { ascending: false }),
+    supabase.from("niches").select("id,name").order("name"),
+  ]);
+  const rows = (campaignsRes.data ?? []) as Campaign[];
+  const niches = (nichesRes.data ?? []).map((n) => ({ id: n.id, name: n.name }));
 
   return (
     <div className="space-y-8">

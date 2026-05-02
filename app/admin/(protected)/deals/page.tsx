@@ -1,5 +1,4 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { mockDeals, mockLeads } from "@/lib/admin/mock";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
 import { NewDealForm } from "@/components/admin/deals/NewDealForm";
@@ -19,22 +18,17 @@ export const metadata = { title: "Deals" };
 
 export default async function DealsPage() {
   const supabase = createSupabaseServerClient();
-  let rows: DealWithLead[] = [];
-  let leads: Pick<Lead, "id" | "name" | "email">[] = [];
-  if (supabase) {
-    const [{ data: deals }, { data: leadsRows }] = await Promise.all([
-      supabase
-        .from("deals")
-        .select("*, lead:leads(name,email)")
-        .order("created_at", { ascending: false }),
-      supabase.from("leads").select("id,name,email").order("created_at", { ascending: false }).limit(200),
-    ]);
-    rows = (deals ?? []) as DealWithLead[];
-    leads = (leadsRows ?? []) as Pick<Lead, "id" | "name" | "email">[];
-  } else {
-    rows = mockDeals;
-    leads = mockLeads.map((l) => ({ id: l.id, name: l.name, email: l.email }));
-  }
+  if (!supabase) return null;
+
+  const [{ data: deals }, { data: leadsRows }] = await Promise.all([
+    supabase
+      .from("deals")
+      .select("*, lead:leads(name,email)")
+      .order("created_at", { ascending: false }),
+    supabase.from("leads").select("id,name,email").order("created_at", { ascending: false }).limit(200),
+  ]);
+  const rows = (deals ?? []) as DealWithLead[];
+  const leads = (leadsRows ?? []) as Pick<Lead, "id" | "name" | "email">[];
 
   return (
     <div className="space-y-8">

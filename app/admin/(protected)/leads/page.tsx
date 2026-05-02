@@ -1,5 +1,4 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { mockLeads } from "@/lib/admin/mock";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
 import { NewLeadForm } from "@/components/admin/leads/NewLeadForm";
@@ -13,20 +12,15 @@ export const metadata = { title: "Leads" };
 
 export default async function LeadsPage() {
   const supabase = createSupabaseServerClient();
+  if (!supabase) return null;
 
-  let leads: Lead[] = [];
-  let error: { message: string } | null = null;
-  if (supabase) {
-    const res = await supabase
-      .from("leads")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .limit(200);
-    leads = (res.data ?? []) as Lead[];
-    error = res.error ?? null;
-  } else {
-    leads = mockLeads;
-  }
+  const res = await supabase
+    .from("leads")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(200);
+  const leads = (res.data ?? []) as Lead[];
+  const error = res.error ?? null;
 
   return (
     <div className="space-y-8">

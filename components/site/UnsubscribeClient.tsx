@@ -3,7 +3,23 @@
 import { useState } from "react";
 import { Loader2, CheckCircle2 } from "lucide-react";
 
-export function UnsubscribeClient({ defaultEmail }: { defaultEmail: string }) {
+type Strings = {
+  emailLabel: string;
+  reasonLabel: string;
+  reasonPlaceholder: string;
+  submit: string;
+  submitting: string;
+  successHeadline: string;
+  successBody: string;
+};
+
+export function UnsubscribeClient({
+  defaultEmail,
+  strings,
+}: {
+  defaultEmail: string;
+  strings: Strings;
+}) {
   const [email, setEmail] = useState(defaultEmail);
   const [reason, setReason] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "ok" | "error">("idle");
@@ -21,7 +37,7 @@ export function UnsubscribeClient({ defaultEmail }: { defaultEmail: string }) {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setError(data?.error ?? "Could not unsubscribe. Please email hello@plynos.dev.");
+        setError(data?.error ?? "Could not unsubscribe. Please email harry@plynos.dev.");
         setStatus("error");
         return;
       }
@@ -35,13 +51,10 @@ export function UnsubscribeClient({ defaultEmail }: { defaultEmail: string }) {
   if (status === "ok") {
     return (
       <div className="flex items-start gap-3">
-        <CheckCircle2 className="mt-0.5 h-5 w-5 text-plynos-blue" />
+        <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" />
         <div>
-          <p className="font-medium text-plynos-navy">You're unsubscribed.</p>
-          <p className="mt-1 text-sm text-plynos-slate">
-            We won't contact <strong>{email}</strong> again. Reply to any past
-            email or write to hello@plynos.dev if you'd like to opt back in.
-          </p>
+          <p className="font-medium text-plynos-navy">{strings.successHeadline}</p>
+          <p className="mt-1 text-sm text-plynos-slate">{strings.successBody}</p>
         </div>
       </div>
     );
@@ -50,7 +63,7 @@ export function UnsubscribeClient({ defaultEmail }: { defaultEmail: string }) {
   return (
     <form onSubmit={submit} className="space-y-4">
       <div>
-        <label className="label-field">Email</label>
+        <label className="label-field">{strings.emailLabel}</label>
         <input
           type="email"
           required
@@ -61,12 +74,12 @@ export function UnsubscribeClient({ defaultEmail }: { defaultEmail: string }) {
         />
       </div>
       <div>
-        <label className="label-field">Reason (optional)</label>
+        <label className="label-field">{strings.reasonLabel}</label>
         <textarea
           className="input-field min-h-[80px]"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
-          placeholder="Anything that helps us stop bothering people who don't want to hear from us."
+          placeholder={strings.reasonPlaceholder}
         />
       </div>
       {error ? (
@@ -77,10 +90,10 @@ export function UnsubscribeClient({ defaultEmail }: { defaultEmail: string }) {
       <button type="submit" disabled={status === "loading"} className="btn-primary disabled:opacity-60">
         {status === "loading" ? (
           <>
-            <Loader2 className="h-4 w-4 animate-spin" /> Submitting…
+            <Loader2 className="h-4 w-4 animate-spin" /> {strings.submitting}
           </>
         ) : (
-          "Unsubscribe"
+          strings.submit
         )}
       </button>
     </form>

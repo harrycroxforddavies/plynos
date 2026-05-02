@@ -4,7 +4,9 @@ import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { Drift } from "@/components/site/Drift";
-import { blogPosts } from "@/lib/blogs";
+import { blogPosts, localize } from "@/lib/blogs";
+import { getLang } from "@/lib/i18n/lang";
+import { t } from "@/lib/i18n/translations";
 
 export const metadata = {
   title: "Blogs",
@@ -13,6 +15,9 @@ export const metadata = {
 };
 
 export default function BlogsIndex() {
+  const lang = getLang();
+  const ui = t(lang).blogsIndex;
+
   return (
     <>
       <SiteHeader />
@@ -21,11 +26,10 @@ export default function BlogsIndex() {
           <div className="max-w-3xl">
             <Drift>
               <h1 className="text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl">
-                Notes from the studio.
+                {ui.headline}
               </h1>
               <p className="mt-5 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl">
-                Short, opinionated reads on building websites that look serious
-                and work properly. No filler.
+                {ui.subhead}
               </p>
             </Drift>
           </div>
@@ -52,18 +56,18 @@ export default function BlogsIndex() {
                 <div className="flex flex-col items-start justify-center">
                   <div className="flex items-center gap-3 text-xs">
                     <span className="rounded-full border border-plynos-navy/10 bg-plynos-soft/50 px-2 py-0.5 font-medium text-plynos-slate">
-                      {p.tag}
+                      {localize(p.tag, lang)}
                     </span>
-                    <span className="text-plynos-slate">{p.read}</span>
+                    <span className="text-plynos-slate">{localize(p.read, lang)}</span>
                   </div>
                   <h2 className="mt-4 text-balance text-2xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-4xl">
-                    {p.title}
+                    {localize(p.title, lang)}
                   </h2>
                   <p className="mt-4 text-base text-plynos-slate md:text-lg">
-                    {p.excerpt}
+                    {localize(p.excerpt, lang)}
                   </p>
                   <span className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-plynos-blue">
-                    Read post
+                    {ui.readPost}
                     <ArrowUpRight className="h-4 w-4" />
                   </span>
                 </div>

@@ -1,6 +1,8 @@
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { UnsubscribeClient } from "@/components/site/UnsubscribeClient";
+import { getLang } from "@/lib/i18n/lang";
+import { t } from "@/lib/i18n/translations";
 
 export const metadata = {
   title: "Unsubscribe",
@@ -12,22 +14,24 @@ export default function UnsubscribePage({
 }: {
   searchParams: { email?: string };
 }) {
+  const lang = getLang();
+  const ui = t(lang).unsubscribe;
   return (
     <>
       <SiteHeader />
       <main className="bg-white">
         <section className="container-page py-20 md:py-28">
           <div className="mx-auto max-w-xl">
-            <span className="eyebrow">Email preferences</span>
+            <span className="eyebrow">{ui.eyebrow}</span>
             <h1 className="mt-5 text-balance text-3xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-4xl">
-              Unsubscribe from Plynos outreach.
+              {ui.headline}
             </h1>
-            <p className="mt-4 text-sm text-plynos-slate">
-              Add your email below to suppress all future outreach. We honour
-              suppression immediately.
-            </p>
+            <p className="mt-4 text-sm text-plynos-slate">{ui.body}</p>
             <div className="mt-8 card">
-              <UnsubscribeClient defaultEmail={searchParams.email ?? ""} />
+              <UnsubscribeClient
+                defaultEmail={searchParams.email ?? ""}
+                strings={ui}
+              />
             </div>
           </div>
         </section>
