@@ -52,10 +52,13 @@ export function LoginForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="email" className="label-field">
-          Email
+        <label
+          htmlFor="email"
+          className="mb-2 block text-xs font-medium text-plynos-slate dark:text-white/60"
+        >
+          Email address
         </label>
         <input
           id="email"
@@ -68,7 +71,10 @@ export function LoginForm({
         />
       </div>
       <div>
-        <label htmlFor="password" className="label-field">
+        <label
+          htmlFor="password"
+          className="mb-2 block text-xs font-medium text-plynos-slate dark:text-white/60"
+        >
           Password
         </label>
         <input
@@ -85,7 +91,7 @@ export function LoginForm({
       {error ? (
         <p
           role="alert"
-          className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700"
+          className="border-l-2 border-red-500 bg-red-50 px-3 py-2 text-xs text-red-700 dark:bg-red-500/10 dark:text-red-200"
         >
           {error}
         </p>
