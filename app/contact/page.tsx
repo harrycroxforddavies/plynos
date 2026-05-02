@@ -18,14 +18,14 @@ export default function ContactPage() {
   return (
     <>
       <SiteHeader />
-      <main className="bg-white">
+      <main className="bg-white transition-colors dark:bg-plynos-navy">
         <section className="container-page py-24 md:py-32 lg:py-40">
           <div className="mx-auto max-w-2xl">
             <Drift>
-              <h1 className="text-balance text-3xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-5xl">
+              <h1 className="text-balance text-3xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-5xl dark:text-white">
                 {c.headline}
               </h1>
-              <p className="mt-6 max-w-xl text-balance text-lg text-plynos-slate md:text-xl">
+              <p className="mt-6 max-w-xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
                 {c.subhead}
               </p>
             </Drift>
@@ -34,11 +34,11 @@ export default function ContactPage() {
               <ContactForm strings={c} />
             </div>
 
-            <p className="mt-8 text-sm text-plynos-slate">
+            <p className="mt-8 text-sm text-plynos-slate dark:text-white/70">
               {c.plainEmailBefore}{" "}
               <a
                 href="mailto:harry@plynos.dev"
-                className="font-medium text-plynos-blue hover:underline"
+                className="font-medium text-plynos-blue hover:underline dark:text-plynos-soft"
               >
                 harry@plynos.dev
               </a>{" "}

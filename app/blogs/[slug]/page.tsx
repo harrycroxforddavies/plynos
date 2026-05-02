@@ -38,26 +38,26 @@ export default function BlogPostPage({
   return (
     <>
       <SiteHeader />
-      <main className="bg-white">
+      <main className="bg-white transition-colors dark:bg-plynos-navy">
         <article className="container-page py-20 md:py-28">
           <div className="max-w-3xl">
             <Drift>
               <div className="flex items-center gap-3 text-xs">
-                <span className="rounded-full border border-plynos-navy/10 bg-plynos-soft/50 px-2 py-0.5 font-medium text-plynos-slate">
+                <span className="rounded-full border border-plynos-navy/10 bg-plynos-soft/50 px-2 py-0.5 font-medium text-plynos-slate dark:border-white/10 dark:bg-white/5 dark:text-white/70">
                   {localize(post.tag, lang)}
                 </span>
-                <span className="text-plynos-slate">{localize(post.read, lang)}</span>
+                <span className="text-plynos-slate dark:text-white/50">{localize(post.read, lang)}</span>
               </div>
-              <h1 className="mt-6 text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl">
+              <h1 className="mt-6 text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl dark:text-white">
                 {localize(post.title, lang)}
               </h1>
-              <p className="mt-6 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl">
+              <p className="mt-6 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
                 {localize(post.excerpt, lang)}
               </p>
             </Drift>
           </div>
 
-          <div className="mt-12 max-w-md overflow-hidden rounded-2xl border border-plynos-navy/10 md:mt-16">
+          <div className="mt-12 max-w-md overflow-hidden rounded-2xl border border-plynos-navy/10 md:mt-16 dark:border-white/10">
             <div className="relative aspect-square w-full">
               <Image
                 src={post.image}
@@ -76,7 +76,7 @@ export default function BlogPostPage({
                 return (
                   <h2
                     key={i}
-                    className="mt-10 text-balance text-2xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-3xl"
+                    className="mt-10 text-balance text-2xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-3xl dark:text-white"
                   >
                     {localize(block.text, lang)}
                   </h2>
@@ -85,7 +85,7 @@ export default function BlogPostPage({
               return (
                 <p
                   key={i}
-                  className="text-base leading-relaxed text-plynos-slate md:text-lg"
+                  className="text-base leading-relaxed text-plynos-slate md:text-lg dark:text-white/70"
                 >
                   {localize(block.text, lang)}
                 </p>
@@ -94,11 +94,11 @@ export default function BlogPostPage({
           </div>
 
           {next ? (
-            <div className="mt-20 max-w-2xl border-t border-plynos-navy/10 pt-10 md:mt-28">
-              <p className="text-xs font-medium text-plynos-slate">{ui.readNext}</p>
+            <div className="mt-20 max-w-2xl border-t border-plynos-navy/10 pt-10 md:mt-28 dark:border-white/10">
+              <p className="text-xs font-medium text-plynos-slate dark:text-white/60">{ui.readNext}</p>
               <Link
                 href={`/blogs/${next.slug}`}
-                className="mt-3 inline-flex items-baseline gap-2 text-balance text-2xl font-semibold !leading-tight tracking-tightish text-plynos-navy hover:text-plynos-blue md:text-3xl"
+                className="mt-3 inline-flex items-baseline gap-2 text-balance text-2xl font-semibold !leading-tight tracking-tightish text-plynos-navy hover:text-plynos-blue md:text-3xl dark:text-white dark:hover:text-plynos-soft"
               >
                 {localize(next.title, lang)}
                 <ArrowUpRight className="h-5 w-5 flex-none translate-y-1" />
@@ -109,7 +109,7 @@ export default function BlogPostPage({
           <div className="mt-16">
             <Link
               href="/blogs"
-              className="text-sm font-medium text-plynos-slate hover:text-plynos-navy"
+              className="text-sm font-medium text-plynos-slate hover:text-plynos-navy dark:text-white/70 dark:hover:text-white"
             >
               {ui.allPosts}
             </Link>

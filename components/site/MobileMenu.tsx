@@ -37,7 +37,7 @@ export function MobileMenu({ strings }: { strings: Strings }) {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         aria-controls="mobile-menu"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-md text-plynos-navy transition hover:bg-plynos-soft/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2 md:hidden"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-md text-plynos-navy transition hover:bg-plynos-soft/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2 md:hidden dark:text-white dark:hover:bg-white/10"
       >
         {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
@@ -55,31 +55,31 @@ export function MobileMenu({ strings }: { strings: Strings }) {
           {/* Panel */}
           <div
             id="mobile-menu"
-            className="fixed inset-x-0 top-16 z-40 border-b border-plynos-navy/10 bg-white md:hidden"
+            className="fixed inset-x-0 top-16 z-40 border-b border-plynos-navy/10 bg-white md:hidden dark:border-white/10 dark:bg-plynos-navy"
           >
             <nav className="container-page flex flex-col py-4 text-base">
               <Link
                 href="/blogs"
                 onClick={() => setOpen(false)}
-                className="rounded-md px-2 py-3 text-plynos-navy transition hover:bg-plynos-soft/60"
+                className="rounded-md px-2 py-3 text-plynos-navy transition hover:bg-plynos-soft/60 dark:text-white dark:hover:bg-white/10"
               >
                 {strings.blogs}
               </Link>
               <Link
                 href="/contact"
                 onClick={() => setOpen(false)}
-                className="rounded-md px-2 py-3 text-plynos-navy transition hover:bg-plynos-soft/60"
+                className="rounded-md px-2 py-3 text-plynos-navy transition hover:bg-plynos-soft/60 dark:text-white dark:hover:bg-white/10"
               >
                 {strings.contact}
               </Link>
               <Link
                 href="/#lead-form"
                 onClick={() => setOpen(false)}
-                className="mt-2 inline-flex items-center justify-center rounded-full bg-plynos-navy px-5 py-3 text-sm font-medium text-white transition hover:bg-plynos-blue"
+                className="mt-2 inline-flex items-center justify-center rounded-full bg-plynos-navy px-5 py-3 text-sm font-medium text-white transition hover:bg-plynos-blue dark:bg-white dark:text-plynos-navy dark:hover:bg-plynos-soft"
               >
                 {strings.requestWebsite}
               </Link>
-              <div className="mt-4 flex items-center justify-end border-t border-plynos-navy/10 pt-4">
+              <div className="mt-4 flex items-center justify-end border-t border-plynos-navy/10 pt-4 dark:border-white/10">
                 <LanguageSwitcher />
               </div>
             </nav>

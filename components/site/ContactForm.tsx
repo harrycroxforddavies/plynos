@@ -64,17 +64,17 @@ export function ContactForm({ strings }: { strings: Strings }) {
 
   if (status === "success") {
     return (
-      <div className="flex items-start gap-4 rounded-2xl border border-plynos-navy/10 bg-white p-6 shadow-soft">
+      <div className="flex items-start gap-4 rounded-2xl border border-plynos-navy/10 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-white/5 dark:shadow-none">
         <CheckCircle2 className="mt-0.5 h-6 w-6 flex-none text-emerald-500" />
         <div>
-          <h3 className="text-lg font-semibold text-plynos-navy">
+          <h3 className="text-lg font-semibold text-plynos-navy dark:text-white">
             {strings.successHeadline}
           </h3>
-          <p className="mt-1 text-sm text-plynos-slate">{strings.successBody}</p>
+          <p className="mt-1 text-sm text-plynos-slate dark:text-white/70">{strings.successBody}</p>
           <button
             type="button"
             onClick={() => setStatus("idle")}
-            className="mt-5 text-sm font-medium text-plynos-blue hover:underline"
+            className="mt-5 text-sm font-medium text-plynos-blue hover:underline dark:text-plynos-soft"
           >
             {strings.successAction}
           </button>
@@ -123,7 +123,7 @@ export function ContactForm({ strings }: { strings: Strings }) {
       <Field label={strings.messageLabel} name="message" error={fieldErrors.goal}>
         <textarea
           id="message"
-          className="input-field min-h-[160px] resize-y"
+          className="input-field min-h-[160px] resize-none"
           name="message"
           required
           maxLength={2000}
@@ -173,7 +173,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-2 block text-sm font-medium text-plynos-navy">
+      <label htmlFor={name} className="mb-2 block text-sm font-medium text-plynos-navy dark:text-white">
         {label}
       </label>
       {children}

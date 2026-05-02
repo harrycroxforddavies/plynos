@@ -17,7 +17,7 @@ function readCookie(): Lang {
 
 export function LanguageSwitcher() {
   const router = useRouter();
-  const [pending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState<Lang>("en");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -33,26 +33,23 @@ export function LanguageSwitcher() {
         setOpen(false);
       }
     }
-    function onKeyDown(e: KeyboardEvent) {
+    function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
     }
     document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
   function pick(lang: Lang) {
-    setCurrent(lang);
     setOpen(false);
-    // Persist choice for one year and re-fetch the RSC payload so server
-    // components pick up the new locale.
+    if (lang === current) return;
+    setCurrent(lang);
     document.cookie = `${COOKIE}=${lang}; path=/; max-age=31536000; samesite=lax`;
-    startTransition(() => {
-      router.refresh();
-    });
+    startTransition(() => router.refresh());
   }
 
   return (
@@ -63,8 +60,7 @@ export function LanguageSwitcher() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={`Language: ${current.toUpperCase()}`}
-        disabled={pending}
-        className="inline-flex items-center gap-1 px-1 text-xs font-medium text-plynos-slate transition hover:text-plynos-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2 focus-visible:rounded-sm disabled:opacity-60"
+        className="inline-flex items-center gap-1 px-1 text-xs font-medium text-plynos-slate transition hover:text-plynos-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2 focus-visible:rounded-sm dark:text-white/60 dark:hover:text-white"
       >
         <span>{current.toUpperCase()}</span>
         <ChevronDown
@@ -76,7 +72,7 @@ export function LanguageSwitcher() {
       {open ? (
         <div
           role="menu"
-          className="absolute right-0 z-50 mt-2 w-20 overflow-hidden rounded-lg border border-plynos-navy/10 bg-white shadow-lg"
+          className="absolute right-0 z-50 mt-2 w-16 overflow-hidden rounded-md border border-plynos-navy/10 bg-white text-xs font-medium shadow-soft dark:border-white/10 dark:bg-plynos-navy"
         >
           {LANGS.map((lang) => (
             <button
@@ -84,12 +80,7 @@ export function LanguageSwitcher() {
               type="button"
               role="menuitem"
               onClick={() => pick(lang)}
-              className={cn(
-                "block w-full px-3 py-2 text-left text-xs font-medium transition",
-                current === lang
-                  ? "bg-plynos-soft/60 text-plynos-navy"
-                  : "text-plynos-slate hover:bg-plynos-soft/40 hover:text-plynos-navy"
-              )}
+              className="block w-full px-3 py-2 text-left text-plynos-slate transition hover:bg-plynos-soft/60 hover:text-plynos-navy dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
             >
               {lang.toUpperCase()}
             </button>

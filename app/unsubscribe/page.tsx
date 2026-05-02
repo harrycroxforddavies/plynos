@@ -19,14 +19,14 @@ export default function UnsubscribePage({
   return (
     <>
       <SiteHeader />
-      <main className="bg-white">
+      <main className="bg-white transition-colors dark:bg-plynos-navy">
         <section className="container-page py-20 md:py-28">
           <div className="mx-auto max-w-xl">
             <span className="eyebrow">{ui.eyebrow}</span>
-            <h1 className="mt-5 text-balance text-3xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-4xl">
+            <h1 className="mt-5 text-balance text-3xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-4xl dark:text-white">
               {ui.headline}
             </h1>
-            <p className="mt-4 text-sm text-plynos-slate">{ui.body}</p>
+            <p className="mt-4 text-sm text-plynos-slate dark:text-white/70">{ui.body}</p>
             <div className="mt-8 card">
               <UnsubscribeClient
                 defaultEmail={searchParams.email ?? ""}

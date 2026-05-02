@@ -6,7 +6,10 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#FFFFFF",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B1220" },
+  ],
 };
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -49,14 +52,29 @@ export const metadata: Metadata = {
   },
 };
 
+// Inline script that runs synchronously before paint, reads the saved theme
+// from localStorage and applies the `dark` class to <html> so there's no
+// flash of the wrong theme on load.
+const themeBootstrap = `
+(function () {
+  try {
+    var t = localStorage.getItem('plynos-theme');
+    if (t === 'dark') document.documentElement.classList.add('dark');
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={plusJakarta.variable}>
-      <body className="min-h-screen bg-white font-sans text-plynos-navy">
+    <html lang="en" className={plusJakarta.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
+      <body className="min-h-screen bg-white font-sans text-plynos-navy transition-colors dark:bg-plynos-navy dark:text-white">
         {children}
       </body>
     </html>

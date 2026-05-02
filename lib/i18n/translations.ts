@@ -11,6 +11,10 @@ type UI = {
     privacy: string;
     legal: string;
     cookies: string;
+    pagesHeading: string;
+    themeHeading: string;
+    light: string;
+    dark: string;
   };
   hero: {
     pill: string;
@@ -108,6 +112,10 @@ const en: UI = {
     privacy: "Privacy",
     legal: "Legal",
     cookies: "Cookies",
+    pagesHeading: "Pages",
+    themeHeading: "Theme",
+    light: "Light",
+    dark: "Dark",
   },
   hero: {
     pill: "Available for custom builds",
@@ -213,6 +221,10 @@ const es: UI = {
     privacy: "Privacidad",
     legal: "Aviso legal",
     cookies: "Cookies",
+    pagesHeading: "Páginas",
+    themeHeading: "Tema",
+    light: "Claro",
+    dark: "Oscuro",
   },
   hero: {
     pill: "Disponible para nuevos proyectos",

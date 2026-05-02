@@ -53,8 +53,8 @@ export function UnsubscribeClient({
       <div className="flex items-start gap-3">
         <CheckCircle2 className="mt-0.5 h-5 w-5 text-emerald-500" />
         <div>
-          <p className="font-medium text-plynos-navy">{strings.successHeadline}</p>
-          <p className="mt-1 text-sm text-plynos-slate">{strings.successBody}</p>
+          <p className="font-medium text-plynos-navy dark:text-white">{strings.successHeadline}</p>
+          <p className="mt-1 text-sm text-plynos-slate dark:text-white/70">{strings.successBody}</p>
         </div>
       </div>
     );

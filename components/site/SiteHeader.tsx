@@ -8,16 +8,16 @@ import { t } from "@/lib/i18n/translations";
 export function SiteHeader() {
   const ui = t(getLang());
   return (
-    <header className="sticky top-0 z-40 border-b border-plynos-navy/10 bg-white/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-plynos-navy/10 bg-white/80 backdrop-blur transition-colors dark:border-white/10 dark:bg-plynos-navy/80">
       <div className="container-page flex h-16 items-center justify-between gap-4 md:grid md:grid-cols-[1fr_auto_1fr]">
         <div className="flex items-center">
           <Logo />
         </div>
 
         {/* Desktop nav (hidden on mobile) */}
-        <nav className="hidden items-center justify-center gap-8 text-sm text-plynos-slate md:flex">
-          <Link href="/blogs" className="hover:text-plynos-navy">{ui.nav.blogs}</Link>
-          <Link href="/contact" className="hover:text-plynos-navy">{ui.nav.contact}</Link>
+        <nav className="hidden items-center justify-center gap-8 text-sm text-plynos-slate md:flex dark:text-white/70">
+          <Link href="/blogs" className="hover:text-plynos-navy dark:hover:text-white">{ui.nav.blogs}</Link>
+          <Link href="/contact" className="hover:text-plynos-navy dark:hover:text-white">{ui.nav.contact}</Link>
         </nav>
 
         {/* Right side */}

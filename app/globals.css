@@ -18,8 +18,6 @@ html {
 }
 
 body {
-  background: var(--plynos-white);
-  color: var(--plynos-navy);
   font-feature-settings: "ss01", "cv11";
 }
 
@@ -29,19 +27,20 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-plynos-navy px-6 py-3 text-sm font-medium text-white transition hover:bg-plynos-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-plynos-navy px-6 py-3 text-sm font-medium text-white transition hover:bg-plynos-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2 dark:bg-white dark:text-plynos-navy dark:hover:bg-plynos-soft;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-plynos-navy/20 bg-white px-6 py-3 text-sm font-medium text-plynos-navy transition hover:border-plynos-navy/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-plynos-navy/20 bg-white px-6 py-3 text-sm font-medium text-plynos-navy transition hover:border-plynos-navy/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plynos-blue focus-visible:ring-offset-2 dark:border-white/30 dark:bg-transparent dark:text-white dark:hover:border-white;
   }
 
   .input-field {
-    @apply block w-full rounded-xl border border-plynos-navy/10 bg-white px-4 py-3 text-sm text-plynos-navy placeholder:text-plynos-slate/70 focus:border-plynos-blue focus:outline-none focus:ring-2 focus:ring-plynos-blue/20;
+    /* 16px on mobile (text-base) prevents iOS auto-zoom on focus; smaller on desktop. */
+    @apply block w-full rounded-xl border border-plynos-navy/10 bg-white px-4 py-3 text-base text-plynos-navy placeholder:text-plynos-slate/70 focus:border-plynos-blue focus:outline-none focus:ring-2 focus:ring-plynos-blue/20 md:text-sm dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/40;
   }
 
   .label-field {
-    @apply mb-1.5 block text-xs font-medium text-plynos-slate;
+    @apply mb-1.5 block text-xs font-medium text-plynos-slate dark:text-white/70;
   }
 
   .section {
@@ -49,15 +48,15 @@ body {
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border border-plynos-navy/10 bg-white px-3 py-1 text-xs font-medium text-plynos-slate;
+    @apply inline-flex items-center gap-2 rounded-full border border-plynos-navy/10 bg-white px-3 py-1 text-xs font-medium text-plynos-slate dark:border-white/10 dark:bg-white/5 dark:text-white/70;
   }
 
   .card {
-    @apply rounded-2xl border border-plynos-navy/10 bg-white p-6 shadow-soft;
+    @apply rounded-2xl border border-plynos-navy/10 bg-white p-6 shadow-soft dark:border-white/10 dark:bg-white/5 dark:shadow-none;
   }
 
   .hairline {
-    @apply border-plynos-navy/10;
+    @apply border-plynos-navy/10 dark:border-white/10;
   }
 }
 
@@ -67,6 +66,12 @@ body {
     linear-gradient(90deg, rgba(11, 18, 32, 0.04) 1px, transparent 1px);
   background-size: 56px 56px;
   background-position: -1px -1px;
+}
+
+.dark .bg-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
 .text-balance {
