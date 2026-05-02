@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B5FFF"/>
+      <stop offset="100%" stop-color="#0B1220"/>
+    </linearGradient>
+    <radialGradient id="g4glow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="500" height="500" fill="url(#g4)"/>
+  <rect width="500" height="500" fill="url(#g4glow)"/>
+
+  <!-- 2x2 grid hairlines -->
+  <line x1="40" y1="250" x2="460" y2="250" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1"/>
+  <line x1="250" y1="40" x2="250" y2="460" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1"/>
+
+  <!-- top-left: stripe (wordmark) -->
+  <text x="125" y="160" text-anchor="middle" fill="#ffffff"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="42" font-weight="700" letter-spacing="-1.5">stripe</text>
+
+  <!-- top-right: Linear wordmark -->
+  <text x="375" y="160" text-anchor="middle" fill="#ffffff"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="40" font-weight="500" letter-spacing="-0.5">Linear</text>
+
+  <!-- bottom-left: Apple silhouette (icon) -->
+  <g transform="translate(125, 350) scale(2.6) translate(-12, -12)">
+    <path fill="#ffffff" d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.84 15.25 3.41 7.59 9.05 7.31c1.35.06 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+  </g>
+
+  <!-- bottom-right: ahrefs in their brand orange -->
+  <text x="375" y="350" text-anchor="middle" fill="#FF7E1A"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="42" font-weight="700" letter-spacing="-1.5">ahrefs</text>
+</svg>
