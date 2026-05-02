@@ -1,7 +1,7 @@
 # CLAUDE.md — Plynos.dev codebase rules
 
 ## Project identity
-Plynos.dev is a premium custom website service. The public site sells custom websites built fast (no specific delivery-window claim — older drafts said "24 hours", that framing has been removed across the public copy and should not be reintroduced). The admin at `/admin` tracks leads, niche experiments, campaigns, deals, content, and a suppression list. Operated by Harry Davies.
+Plynos.dev is a premium custom website service. The public site sells custom websites built fast (no specific delivery-window claim — older drafts said "24 hours", that framing has been removed across the public copy and should not be reintroduced). The admin at `/admin` tracks leads, niche experiments, campaigns, opportunities, content, and a suppression list. Operated by Harry Davies.
 
 ## Non-negotiables
 - Do not show prices publicly.
@@ -75,6 +75,17 @@ Avoid:
 
 Plus dedicated routes: `/contact`, `/blogs`, `/blogs/[slug]`, `/privacy`, `/legal`, `/cookies`, `/unsubscribe`.
 
+## Admin
+
+The admin panel lives at `/admin/*` and is being refactored over multiple phases. **Always read [docs/admin/](docs/admin/) before changing admin code** — the plan, conventions, and phase status all live there.
+
+Key admin rules (reflecting current Phase 1+ state):
+- The route is `/admin/opportunities`. The DB table is `opportunities` (renamed from `deals` in migration `0003_rename_deals_to_opportunities.sql`); the TypeScript type is `Opportunity`.
+- "Industry" is the user-facing label for what the DB calls `niche` (the column on `leads`). The internal experiment-tracking module is still called "Niches".
+- Sidebar nav is **text-only** — no `lucide-react` icons next to nav labels. Functional icons (chevron, X, search glass, loader spinner) are still allowed where they actually convey meaning.
+- Tables and stat tiles use **hairline borders**, not rounded cards or shadows.
+- All admin pages live under the `(protected)` route group whose layout calls `requireAdminUser()`.
+
 ## Admin auth (three layers)
 1. **Edge middleware** (`middleware.ts` → `lib/supabase/middleware.ts`) redirects unauthenticated `/admin/*` requests to `/admin/login` before any server component runs.
 2. **Server-side guard** (`lib/supabase/admin-guard.ts:requireAdminUser`) used by the protected layout — refuses to render if Supabase isn't configured, re-checks `auth.getUser()`, and reads `profiles.role`. Non-admin → `/admin/login?error=forbidden`.
@@ -98,6 +109,7 @@ The user uses a single `.env` file for all of these; no `.env.example` (intentio
 ## Supabase
 - Schema in `supabase/migrations/0001_init.sql` (all tables, RLS, `is_admin()`, `on_auth_user_created` trigger).
 - Phone column added in `supabase/migrations/0002_lead_phone.sql`.
+- `deals` table renamed to `opportunities` in `supabase/migrations/0003_rename_deals_to_opportunities.sql`.
 - Both must be run in the Supabase SQL editor for the admin and lead form to work.
 - Admin user is created via Auth → Users; the trigger mints a `profiles` row with `role = 'admin'`.
 

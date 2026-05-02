@@ -18,8 +18,8 @@ export type LeadSource =
   | "other";
 
 export type NicheDecision = "testing" | "narrow" | "kill" | "keep";
-export type DealStatus = "open" | "won" | "lost";
-export type DealPaymentStatus = "unpaid" | "deposit" | "paid" | "refunded";
+export type OpportunityStatus = "open" | "won" | "lost";
+export type OpportunityPaymentStatus = "unpaid" | "deposit" | "paid" | "refunded";
 export type ContentType = "blog" | "news" | "portfolio" | "testimonial";
 
 export interface Profile {
@@ -84,13 +84,13 @@ export interface Touchpoint {
   next_action_at: string | null;
 }
 
-export interface Deal {
+export interface Opportunity {
   id: string;
   created_at: string;
   lead_id: string | null;
   value_eur: number | null;
-  status: DealStatus;
-  payment_status: DealPaymentStatus;
+  status: OpportunityStatus;
+  payment_status: OpportunityPaymentStatus;
   assets_received: boolean;
   build_started: boolean;
   review_sent: boolean;
@@ -136,7 +136,7 @@ export interface Database {
       niches: TableDef<Niche>;
       campaigns: TableDef<Campaign>;
       touchpoints: TableDef<Touchpoint>;
-      deals: TableDef<Deal>;
+      opportunities: TableDef<Opportunity>;
       content_posts: TableDef<ContentPost>;
       unsubscribes: TableDef<Unsubscribe>;
     };

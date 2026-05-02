@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { Plus, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { Select } from "@/components/admin/Select";
 import { createCampaign } from "@/app/admin/(protected)/campaigns/actions";
 
 export function NewCampaignForm({
@@ -32,16 +33,16 @@ export function NewCampaignForm({
   if (!open) {
     return (
       <button type="button" onClick={() => setOpen(true)} className="btn-primary">
-        <Plus className="h-4 w-4" /> Add campaign
+        Add campaign
       </button>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6">
+    <div className="border border-plynos-navy/10 bg-white p-6 dark:border-white/10 dark:bg-white/5">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-plynos-navy">New campaign</h2>
-        <button type="button" onClick={() => setOpen(false)} className="text-xs text-plynos-slate hover:text-plynos-navy">
+        <h2 className="text-base font-semibold text-plynos-navy dark:text-white">New campaign</h2>
+        <button type="button" onClick={() => setOpen(false)} className="text-xs font-medium text-plynos-slate hover:text-plynos-navy dark:text-white/60 dark:hover:text-white">
           Cancel
         </button>
       </div>
@@ -64,12 +65,16 @@ export function NewCampaignForm({
         </div>
         <div>
           <label className="label-field">Niche</label>
-          <select className="input-field" name="niche_id" defaultValue="">
-            <option value="">- none -</option>
-            {niches.map((n) => (
-              <option key={n.id} value={n.id}>{n.name}</option>
-            ))}
-          </select>
+          <Select<string>
+            name="niche_id"
+            defaultValue=""
+            placeholder="- none -"
+            options={[
+              { value: "", label: "- none -" },
+              ...niches.map((n) => ({ value: n.id, label: n.name })),
+            ]}
+            buttonClassName="py-3 text-sm"
+          />
         </div>
         <div className="grid grid-cols-3 gap-3 md:col-span-2 md:grid-cols-6">
           <Stat label="Sent" name="sent" />

@@ -1,8 +1,12 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { Plus, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { Select } from "@/components/admin/Select";
 import { createContent } from "@/app/admin/(protected)/content/actions";
+import type { ContentType } from "@/types/database";
+
+const TYPE_OPTIONS: ContentType[] = ["blog", "news", "portfolio", "testimonial"];
 
 export function NewContentForm() {
   const [open, setOpen] = useState(false);
@@ -28,16 +32,16 @@ export function NewContentForm() {
   if (!open) {
     return (
       <button type="button" onClick={() => setOpen(true)} className="btn-primary">
-        <Plus className="h-4 w-4" /> Add post
+        Add post
       </button>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6">
+    <div className="border border-plynos-navy/10 bg-white p-6 dark:border-white/10 dark:bg-white/5">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-plynos-navy">New content</h2>
-        <button type="button" onClick={() => setOpen(false)} className="text-xs text-plynos-slate hover:text-plynos-navy">
+        <h2 className="text-base font-semibold text-plynos-navy dark:text-white">New content</h2>
+        <button type="button" onClick={() => setOpen(false)} className="text-xs font-medium text-plynos-slate hover:text-plynos-navy dark:text-white/60 dark:hover:text-white">
           Cancel
         </button>
       </div>
@@ -48,11 +52,12 @@ export function NewContentForm() {
         </div>
         <div>
           <label className="label-field">Type</label>
-          <select className="input-field" name="type" defaultValue="blog">
-            {["blog", "news", "portfolio", "testimonial"].map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
-          </select>
+          <Select<ContentType>
+            name="type"
+            defaultValue="blog"
+            options={TYPE_OPTIONS}
+            buttonClassName="py-3 text-sm"
+          />
         </div>
         <div>
           <label className="label-field">Slug (optional)</label>

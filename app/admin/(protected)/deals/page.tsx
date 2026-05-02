@@ -11,8 +11,6 @@ import {
 import { formatDateTime, formatEUR } from "@/lib/utils";
 import type { Deal, Lead } from "@/types/database";
 
-type DealWithLead = Deal & { lead: { name: string; email: string } | null };
-
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Deals" };
 
@@ -27,6 +25,8 @@ export default async function DealsPage() {
       .order("created_at", { ascending: false }),
     supabase.from("leads").select("id,name,email").order("created_at", { ascending: false }).limit(200),
   ]);
+
+  type DealWithLead = Deal & { lead: { name: string; email: string } | null };
   const rows = (deals ?? []) as DealWithLead[];
   const leads = (leadsRows ?? []) as Pick<Lead, "id" | "name" | "email">[];
 

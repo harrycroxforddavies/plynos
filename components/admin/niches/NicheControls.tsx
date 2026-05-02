@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { Trash2 } from "lucide-react";
+import { Select } from "@/components/admin/Select";
 import { deleteNiche, updateNicheDecision } from "@/app/admin/(protected)/niches/actions";
 import type { NicheDecision } from "@/types/database";
 
@@ -16,20 +16,17 @@ export function NicheDecisionSelect({
 }) {
   const [pending, startTransition] = useTransition();
   return (
-    <select
-      defaultValue={decision ?? "testing"}
+    <Select<NicheDecision>
+      options={DECISIONS}
+      value={decision ?? "testing"}
       disabled={pending}
-      onChange={(e) =>
+      ariaLabel="Niche decision"
+      onChange={(next) =>
         startTransition(() => {
-          void updateNicheDecision(id, e.target.value as NicheDecision);
+          void updateNicheDecision(id, next);
         })
       }
-      className="rounded-lg border border-plynos-navy/15 bg-white px-2 py-1 text-xs text-plynos-navy focus:border-plynos-blue focus:outline-none focus:ring-2 focus:ring-plynos-blue/20"
-    >
-      {DECISIONS.map((d) => (
-        <option key={d} value={d}>{d}</option>
-      ))}
-    </select>
+    />
   );
 }
 
@@ -45,9 +42,9 @@ export function NicheDeleteButton({ id }: { id: string }) {
           void deleteNiche(id);
         });
       }}
-      className="inline-flex items-center gap-1 rounded-lg border border-plynos-navy/10 px-2 py-1 text-xs text-plynos-slate hover:border-rose-300 hover:text-rose-600 disabled:opacity-50"
+      className="text-xs font-medium text-red-600 hover:text-red-700 disabled:opacity-50 dark:text-red-400 dark:hover:text-red-300"
     >
-      <Trash2 className="h-3.5 w-3.5" /> Delete
+      Delete
     </button>
   );
 }

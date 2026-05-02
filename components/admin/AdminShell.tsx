@@ -1,33 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-  LayoutDashboard,
-  Users,
-  Sparkles,
-  Megaphone,
-  FileText,
-  Briefcase,
-  ShieldOff,
-  LogOut,
-  Menu,
-  X,
-} from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 import { Logo } from "@/components/site/Logo";
 
 const nav = [
-  { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/leads", label: "Leads", icon: Users },
-  { href: "/admin/niches", label: "Niches", icon: Sparkles },
-  { href: "/admin/campaigns", label: "Campaigns", icon: Megaphone },
-  { href: "/admin/content", label: "Content", icon: FileText },
-  { href: "/admin/deals", label: "Deals", icon: Briefcase },
-  { href: "/admin/suppression", label: "Suppression", icon: ShieldOff },
+  { href: "/admin/dashboard", label: "Dashboard" },
+  { href: "/admin/leads", label: "Leads" },
+  { href: "/admin/opportunities", label: "Opportunities" },
+  { href: "/admin/campaigns", label: "Campaigns" },
+  { href: "/admin/niches", label: "Niches" },
+  { href: "/admin/content", label: "Content" },
+  { href: "/admin/suppression", label: "Suppression" },
 ];
 
 export function AdminShell({
@@ -52,74 +40,72 @@ export function AdminShell({
   }
 
   return (
-    <div className="min-h-screen bg-plynos-soft/30">
-      <div className="mx-auto flex max-w-[1400px] gap-0 lg:gap-8 lg:px-6">
+    <div className="min-h-screen bg-white text-plynos-navy transition-colors dark:bg-plynos-navy dark:text-white">
+      <div className="mx-auto flex w-full max-w-[1400px]">
         <aside
           className={cn(
-            "fixed inset-y-0 left-0 z-40 w-72 transform border-r border-plynos-navy/10 bg-white p-6 transition-transform lg:static lg:translate-x-0",
+            "fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto border-r border-plynos-navy/10 bg-white p-6 transition-transform dark:border-white/10 dark:bg-plynos-navy lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
             mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
           )}
         >
           <div className="flex items-center justify-between">
-            <Logo />
+            <Logo className="[&_img]:h-11 [&_img]:w-11" />
             <button
               type="button"
-              className="lg:hidden"
+              className="text-plynos-slate hover:text-plynos-navy lg:hidden dark:text-white/60 dark:hover:text-white"
               onClick={() => setMobileOpen(false)}
               aria-label="Close menu"
             >
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" aria-hidden />
             </button>
           </div>
 
-          <nav className="mt-8 flex flex-col gap-1">
+          <nav className="mt-12 flex flex-col gap-0.5 text-sm">
             {nav.map((item) => {
               const active = pathname?.startsWith(item.href);
-              const Icon = item.icon;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition",
+                    "rounded-md px-3 py-2 transition",
                     active
-                      ? "bg-plynos-navy text-white"
-                      : "text-plynos-slate hover:bg-plynos-soft/60 hover:text-plynos-navy"
+                      ? "bg-plynos-soft text-plynos-navy dark:bg-white/10 dark:text-white"
+                      : "text-plynos-slate hover:bg-plynos-soft/60 hover:text-plynos-navy dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white"
                   )}
                 >
-                  <Icon className="h-4 w-4" />
                   {item.label}
                 </Link>
               );
             })}
           </nav>
 
-          <div className="mt-10 border-t border-plynos-navy/10 pt-5 text-xs text-plynos-slate">
-            <p className="truncate">{email ?? "Signed in"}</p>
+          <div className="mt-auto border-t border-plynos-navy/10 pt-6 text-xs dark:border-white/10">
+            <p className="truncate text-plynos-slate dark:text-white/60">{email ?? "Signed in"}</p>
             <button
               type="button"
               onClick={handleSignOut}
-              className="mt-3 inline-flex items-center gap-2 rounded-lg border border-plynos-navy/10 px-3 py-1.5 text-plynos-navy hover:bg-plynos-soft/60"
+              className="mt-3 text-sm font-medium text-plynos-navy hover:text-plynos-blue dark:text-white dark:hover:text-plynos-soft"
             >
-              <LogOut className="h-3.5 w-3.5" /> Sign out
+              Sign out
             </button>
           </div>
         </aside>
 
-        <div className="flex-1 lg:py-6">
-          <header className="flex items-center justify-between border-b border-plynos-navy/10 bg-white px-6 py-4 lg:hidden">
-            <Logo />
+        <div className="min-w-0 flex-1">
+          <header className="flex items-center justify-between border-b border-plynos-navy/10 bg-white px-6 py-4 lg:hidden dark:border-white/10 dark:bg-plynos-navy">
+            <Logo className="[&_img]:h-11 [&_img]:w-11" />
             <button
               type="button"
-              className="rounded-lg border border-plynos-navy/10 p-2"
+              className="text-plynos-slate hover:text-plynos-navy dark:text-white/70 dark:hover:text-white"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
             >
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" aria-hidden />
             </button>
           </header>
-          <div className="px-6 py-8 lg:rounded-2xl lg:bg-white lg:p-8 lg:shadow-soft">
+          <div className="px-6 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14">
             {children}
           </div>
         </div>

@@ -16,10 +16,10 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const post = findPostBySlug(params.slug);
   if (!post) return {};
-  // Default to EN for metadata since meta is server-emitted at request time
+  // Default to en-GB for metadata since meta is server-emitted at request time
   return {
-    title: post.title.en,
-    description: post.excerpt.en,
+    title: post.title.en_gb,
+    description: post.excerpt.en_gb,
   };
 }
 

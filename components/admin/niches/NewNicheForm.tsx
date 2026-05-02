@@ -1,8 +1,12 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { Plus, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { Select } from "@/components/admin/Select";
 import { createNiche } from "@/app/admin/(protected)/niches/actions";
+import type { NicheDecision } from "@/types/database";
+
+const DECISION_OPTIONS: NicheDecision[] = ["testing", "narrow", "kill", "keep"];
 
 export function NewNicheForm() {
   const [open, setOpen] = useState(false);
@@ -28,16 +32,16 @@ export function NewNicheForm() {
   if (!open) {
     return (
       <button type="button" onClick={() => setOpen(true)} className="btn-primary">
-        <Plus className="h-4 w-4" /> Add niche
+        Add niche
       </button>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6">
+    <div className="border border-plynos-navy/10 bg-white p-6 dark:border-white/10 dark:bg-white/5">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold text-plynos-navy">New niche experiment</h2>
-        <button type="button" onClick={() => setOpen(false)} className="text-xs text-plynos-slate hover:text-plynos-navy">
+        <h2 className="text-base font-semibold text-plynos-navy dark:text-white">New niche experiment</h2>
+        <button type="button" onClick={() => setOpen(false)} className="text-xs font-medium text-plynos-slate hover:text-plynos-navy dark:text-white/60 dark:hover:text-white">
           Cancel
         </button>
       </div>
@@ -48,11 +52,12 @@ export function NewNicheForm() {
         </div>
         <div>
           <label className="label-field">Decision</label>
-          <select className="input-field" name="decision" defaultValue="testing">
-            {["testing", "narrow", "kill", "keep"].map((d) => (
-              <option key={d} value={d}>{d}</option>
-            ))}
-          </select>
+          <Select<NicheDecision>
+            name="decision"
+            defaultValue="testing"
+            options={DECISION_OPTIONS}
+            buttonClassName="py-3 text-sm"
+          />
         </div>
         <div>
           <label className="label-field">Score (0-10)</label>

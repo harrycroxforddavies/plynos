@@ -1,16 +1,13 @@
+import Link from "next/link";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { getDashboardMetrics } from "@/lib/admin/metrics";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { Stat } from "@/components/admin/Stat";
 import { Table, THead, TR, TH, TD, EmptyRow } from "@/components/admin/Table";
 import { formatDateTime, formatEUR, pct } from "@/lib/utils";
-import Link from "next/link";
 
 export const dynamic = "force-dynamic";
-
-export const metadata = {
-  title: "Dashboard",
-};
+export const metadata = { title: "Dashboard" };
 
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();
@@ -18,36 +15,61 @@ export default async function DashboardPage() {
   const metrics = await getDashboardMetrics(supabase);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <PageHeader
         title="Dashboard"
-        description="A quick read of leads, conversion, campaigns and deal flow."
+        description="A read of leads, conversion, campaigns and pipeline."
       />
 
-      <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Stat label="Leads today" value={metrics.leadsToday} />
-        <Stat label="Leads 7d" value={metrics.leads7} />
-        <Stat label="Leads 30d" value={metrics.leads30} />
-        <Stat
-          label="Conversion (30d)"
-          value={pct(metrics.closedWon, metrics.leads30)}
-          hint={`${metrics.closedWon} won / ${metrics.leads30} leads`}
-        />
+      {/* Top metrics — broken into two rows for breathing room and rhythm. */}
+      <section>
+        <h2 className="text-xs font-medium text-plynos-slate dark:text-white/60">
+          Lead volume
+        </h2>
+        <div className="mt-3 grid border-b border-r border-plynos-navy/10 dark:border-white/10 sm:grid-cols-2 lg:grid-cols-4 [&>*]:border-l [&>*]:border-t [&>*]:border-plynos-navy/10 dark:[&>*]:border-white/10">
+          <Stat label="Today" value={metrics.leadsToday} />
+          <Stat label="Last 7 days" value={metrics.leads7} />
+          <Stat label="Last 30 days" value={metrics.leads30} />
+          <Stat
+            label="Conversion (30d)"
+            value={pct(metrics.closedWon, metrics.leads30)}
+            hint={`${metrics.closedWon} won, ${metrics.leads30} total`}
+          />
+        </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Stat label="Calls booked" value={metrics.callsBooked} />
-        <Stat label="Proposals sent" value={metrics.proposalsSent} />
-        <Stat label="Closed won" value={metrics.closedWon} hint={`${metrics.closedLost} lost`} />
-        <Stat label="AOV" value={formatEUR(metrics.aov)} hint={`Target €600`} />
+      <section>
+        <h2 className="text-xs font-medium text-plynos-slate dark:text-white/60">
+          Pipeline
+        </h2>
+        <div className="mt-3 grid border-b border-r border-plynos-navy/10 dark:border-white/10 sm:grid-cols-2 lg:grid-cols-4 [&>*]:border-l [&>*]:border-t [&>*]:border-plynos-navy/10 dark:[&>*]:border-white/10">
+          <Stat label="Calls booked" value={metrics.callsBooked} />
+          <Stat label="Proposals sent" value={metrics.proposalsSent} />
+          <Stat
+            label="Closed won"
+            value={metrics.closedWon}
+            hint={`${metrics.closedLost} lost`}
+          />
+          <Stat
+            label="Average opportunity"
+            value={formatEUR(metrics.aov)}
+            hint="Target €600"
+          />
+        </div>
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-3">
-        <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6 lg:col-span-2">
-          <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-plynos-navy">Recent leads</h2>
-            <Link href="/admin/leads" className="text-xs text-plynos-blue hover:underline">
-              View all →
+      {/* Recent leads + side panel */}
+      <section className="grid gap-10 lg:grid-cols-3">
+        <div className="lg:col-span-2">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-base font-semibold text-plynos-navy dark:text-white">
+              Recent leads
+            </h2>
+            <Link
+              href="/admin/leads"
+              className="text-xs font-medium text-plynos-blue hover:underline dark:text-plynos-soft"
+            >
+              View all
             </Link>
           </div>
           <div className="mt-4">
@@ -57,26 +79,31 @@ export default async function DashboardPage() {
                   <TH>Created</TH>
                   <TH>Name</TH>
                   <TH>Email</TH>
-                  <TH>Niche</TH>
+                  <TH>Industry</TH>
                   <TH>Status</TH>
                 </TR>
               </THead>
               <tbody>
                 {metrics.recentLeads.length === 0 ? (
-                  <EmptyRow cols={5} message="No leads yet - your first request will appear here." />
+                  <EmptyRow
+                    cols={5}
+                    message="No leads yet. Your first request will appear here."
+                  />
                 ) : (
                   metrics.recentLeads.map((l) => (
                     <TR key={l.id}>
-                      <TD className="whitespace-nowrap text-plynos-slate">
+                      <TD className="whitespace-nowrap text-plynos-slate dark:text-white/60">
                         {formatDateTime(l.created_at)}
                       </TD>
                       <TD className="font-medium">{l.name}</TD>
-                      <TD className="text-plynos-slate">{l.email}</TD>
-                      <TD className="text-plynos-slate">{l.niche ?? "-"}</TD>
-                      <TD>
-                        <span className="rounded-full border border-plynos-navy/10 bg-plynos-soft/60 px-2 py-0.5 text-xs text-plynos-slate">
-                          {l.status}
-                        </span>
+                      <TD className="text-plynos-slate dark:text-white/60">
+                        {l.email}
+                      </TD>
+                      <TD className="text-plynos-slate dark:text-white/60">
+                        {l.niche ?? "-"}
+                      </TD>
+                      <TD className="text-plynos-slate dark:text-white/60">
+                        {l.status}
                       </TD>
                     </TR>
                   ))
@@ -86,51 +113,67 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div className="space-y-6">
-          <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6">
-            <h2 className="text-base font-semibold text-plynos-navy">Outbound</h2>
+        <div className="space-y-10">
+          <div>
+            <h2 className="text-base font-semibold text-plynos-navy dark:text-white">
+              Outbound
+            </h2>
             <dl className="mt-4 space-y-3 text-sm">
-              <div className="flex justify-between">
-                <dt className="text-plynos-slate">Sent</dt>
-                <dd className="font-medium">{metrics.campaignsTotal.sent}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-plynos-slate">Reply rate</dt>
-                <dd className="font-medium">{pct(metrics.campaignsTotal.replies, metrics.campaignsTotal.sent)}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-plynos-slate">Bounces</dt>
-                <dd className="font-medium">{metrics.campaignsTotal.bounces}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-plynos-slate">Unsubscribes</dt>
-                <dd className="font-medium">{metrics.campaignsTotal.unsubscribes}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-plynos-slate">Wins from campaigns</dt>
-                <dd className="font-medium">{metrics.campaignsTotal.wins}</dd>
-              </div>
+              <Row
+                label="Sent"
+                value={String(metrics.campaignsTotal.sent)}
+              />
+              <Row
+                label="Reply rate"
+                value={pct(
+                  metrics.campaignsTotal.replies,
+                  metrics.campaignsTotal.sent
+                )}
+              />
+              <Row
+                label="Bounces"
+                value={String(metrics.campaignsTotal.bounces)}
+              />
+              <Row
+                label="Unsubscribes"
+                value={String(metrics.campaignsTotal.unsubscribes)}
+              />
+              <Row
+                label="Wins from campaigns"
+                value={String(metrics.campaignsTotal.wins)}
+              />
             </dl>
           </div>
 
-          <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6">
-            <h2 className="text-base font-semibold text-plynos-navy">Leads by niche</h2>
+          <div>
+            <h2 className="text-base font-semibold text-plynos-navy dark:text-white">
+              Leads by industry
+            </h2>
             {metrics.leadsByNiche.length === 0 ? (
-              <p className="mt-4 text-sm text-plynos-slate">No data yet.</p>
+              <p className="mt-4 text-sm text-plynos-slate dark:text-white/60">
+                No data yet.
+              </p>
             ) : (
               <ul className="mt-4 space-y-3">
                 {metrics.leadsByNiche.map((row) => {
                   const max = metrics.leadsByNiche[0].count || 1;
-                  const width = Math.max(6, Math.round((row.count / max) * 100));
+                  const width = Math.max(
+                    6,
+                    Math.round((row.count / max) * 100)
+                  );
                   return (
                     <li key={row.niche} className="space-y-1">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="truncate pr-3 text-plynos-navy">{row.niche}</span>
-                        <span className="text-plynos-slate">{row.count}</span>
+                        <span className="truncate pr-3 text-plynos-navy dark:text-white">
+                          {row.niche}
+                        </span>
+                        <span className="text-plynos-slate dark:text-white/60">
+                          {row.count}
+                        </span>
                       </div>
-                      <div className="h-1.5 overflow-hidden rounded-full bg-plynos-soft">
+                      <div className="h-1 overflow-hidden bg-plynos-soft dark:bg-white/10">
                         <div
-                          className="h-full rounded-full bg-plynos-blue"
+                          className="h-full bg-plynos-blue dark:bg-plynos-soft"
                           style={{ width: `${width}%` }}
                         />
                       </div>
@@ -141,15 +184,17 @@ export default async function DashboardPage() {
             )}
           </div>
 
-          <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6">
-            <h2 className="text-base font-semibold text-plynos-navy">Revenue (30d)</h2>
-            <p className="mt-3 text-2xl font-semibold tracking-tightish text-plynos-navy">
-              {formatEUR(metrics.revenue30)}
-            </p>
-            <p className="mt-1 text-xs text-plynos-slate">From won deals in the last 30 days.</p>
-          </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex justify-between border-b border-plynos-navy/5 pb-3 text-sm last:border-b-0 dark:border-white/5">
+      <dt className="text-plynos-slate dark:text-white/60">{label}</dt>
+      <dd className="font-medium text-plynos-navy dark:text-white">{value}</dd>
     </div>
   );
 }

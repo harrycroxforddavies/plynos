@@ -1,7 +1,6 @@
 "use client";
 
 import { useTransition } from "react";
-import { Trash2 } from "lucide-react";
 import {
   deleteCampaign,
   updateCampaignStat,
@@ -56,9 +55,9 @@ export function CampaignDeleteButton({ id }: { id: string }) {
           void deleteCampaign(id);
         });
       }}
-      className="inline-flex items-center gap-1 rounded-lg border border-plynos-navy/10 px-2 py-1 text-xs text-plynos-slate hover:border-rose-300 hover:text-rose-600 disabled:opacity-50"
+      className="text-xs font-medium text-plynos-slate hover:text-red-600 disabled:opacity-50 dark:text-white/60 dark:hover:text-red-400"
     >
-      <Trash2 className="h-3.5 w-3.5" /> Delete
+      Delete
     </button>
   );
 }

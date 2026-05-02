@@ -51,7 +51,7 @@ export async function getDashboardMetrics(supabase: SB): Promise<DashboardMetric
     supabase.from("leads").select("id", { count: "exact", head: true }).eq("status", "proposal_sent"),
     supabase.from("leads").select("id", { count: "exact", head: true }).eq("status", "won"),
     supabase.from("leads").select("id", { count: "exact", head: true }).eq("status", "lost"),
-    supabase.from("deals").select("value_eur,status,created_at"),
+    supabase.from("opportunities").select("value_eur,status,created_at"),
     supabase.from("campaigns").select("sent,replies,bounces,unsubscribes,wins"),
     supabase.from("leads").select("niche"),
     supabase

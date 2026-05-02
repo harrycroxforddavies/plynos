@@ -28,9 +28,9 @@ export default async function SuppressionPage() {
         description="Emails that should never receive outreach. The lead form rejects new submissions from these addresses."
       />
 
-      <div className="rounded-2xl border border-plynos-navy/10 bg-white p-6">
-        <h2 className="text-base font-semibold text-plynos-navy">Add to suppression</h2>
-        <p className="mt-1 text-xs text-plynos-slate">Marks any matching leads as unsubscribed.</p>
+      <div className="border border-plynos-navy/10 bg-white p-6 dark:border-white/10 dark:bg-white/5">
+        <h2 className="text-base font-semibold text-plynos-navy dark:text-white">Add to suppression</h2>
+        <p className="mt-1 text-xs text-plynos-slate dark:text-white/60">Marks any matching leads as unsubscribed.</p>
         <div className="mt-5">
           <AddSuppressionForm />
         </div>
