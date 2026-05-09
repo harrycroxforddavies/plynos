@@ -10,6 +10,7 @@ export function LeadsCSVImport() {
   const [result, setResult] = useState<{
     ok: boolean;
     message: string;
+    rowErrors?: { row: number; error: string }[];
   } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,6 +32,7 @@ export function LeadsCSVImport() {
         setResult({
           ok: true,
           message: `Imported ${res.inserted} lead${res.inserted === 1 ? "" : "s"}${tail}.`,
+          rowErrors: res.rowErrors,
         });
       } else {
         setResult({ ok: false, message: res.error });
@@ -61,16 +63,25 @@ export function LeadsCSVImport() {
         onChange={onChange}
       />
       {result ? (
-        <p
-          className={cn(
-            "text-xs",
-            result.ok
-              ? "text-plynos-slate dark:text-white/60"
-              : "text-red-600 dark:text-red-400"
-          )}
-        >
-          {result.message}
-        </p>
+        <div className="flex flex-col items-end gap-1">
+          <p
+            className={cn(
+              "text-xs",
+              result.ok
+                ? "text-plynos-slate dark:text-white/60"
+                : "text-red-600 dark:text-red-400"
+            )}
+          >
+            {result.message}
+          </p>
+          {result.rowErrors && result.rowErrors.length > 0 ? (
+            <ul className="max-w-xs space-y-0.5 text-right text-[11px] text-red-600 dark:text-red-400">
+              {result.rowErrors.map((e) => (
+                <li key={e.row}>row {e.row}: {e.error}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
       ) : null}
     </div>
   );

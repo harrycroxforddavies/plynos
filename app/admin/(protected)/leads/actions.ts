@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { leadCsvRowSchema } from "@/lib/validation";
 import type { LeadSource, LeadStatus } from "@/types/database";
 
 const STATUSES: LeadStatus[] = [
@@ -190,41 +191,57 @@ export async function importLeadsCSV(formData: FormData) {
     notes: string | null;
   };
   const inserts: LeadInsert[] = [];
-  let skipped = 0;
+  const rowErrors: { row: number; error: string }[] = [];
 
-  for (const r of rows.slice(1)) {
-    const name = get(r, idx.name);
-    const email = get(r, idx.email).toLowerCase();
-    if (!name || !email) {
-      skipped++;
-      continue;
-    }
-    const sourceRaw = get(r, idx.source).toLowerCase();
-    const statusRaw = get(r, idx.status).toLowerCase();
-    const source = (SOURCES as string[]).includes(sourceRaw)
-      ? (sourceRaw as LeadSource)
-      : "other";
-    const status = (STATUSES as string[]).includes(statusRaw)
-      ? (statusRaw as LeadStatus)
-      : "new";
-    inserts.push({
-      name,
-      email,
-      phone: get(r, idx.phone) || null,
-      company: get(r, idx.company) || null,
-      website_url: get(r, idx.website_url) || null,
-      niche: get(r, idx.niche) || null,
-      goal: get(r, idx.goal) || null,
-      source,
-      status,
-      notes: get(r, idx.notes) || null,
+  rows.slice(1).forEach((r, i) => {
+    const rowNumber = i + 2; // +1 for header, +1 for 1-based
+    const parsed = leadCsvRowSchema.safeParse({
+      name: get(r, idx.name),
+      email: get(r, idx.email),
+      phone: get(r, idx.phone),
+      company: get(r, idx.company),
+      website_url: get(r, idx.website_url),
+      niche: get(r, idx.niche),
+      goal: get(r, idx.goal),
+      notes: get(r, idx.notes),
+      source: get(r, idx.source),
+      status: get(r, idx.status),
     });
-  }
+
+    if (!parsed.success) {
+      const first = parsed.error.errors[0];
+      const field = first?.path.join(".") ?? "row";
+      rowErrors.push({ row: rowNumber, error: `${field}: ${first?.message ?? "invalid"}` });
+      return;
+    }
+
+    inserts.push({
+      name: parsed.data.name,
+      email: parsed.data.email,
+      phone: parsed.data.phone ?? null,
+      company: parsed.data.company ?? null,
+      website_url: parsed.data.website_url ?? null,
+      niche: parsed.data.niche ?? null,
+      goal: parsed.data.goal ?? null,
+      notes: parsed.data.notes ?? null,
+      source: parsed.data.source ?? "other",
+      status: parsed.data.status ?? "new",
+    });
+  });
+
+  const skipped = rowErrors.length;
 
   if (inserts.length === 0) {
+    const sample = rowErrors
+      .slice(0, 3)
+      .map((e) => `row ${e.row}: ${e.error}`)
+      .join("; ");
     return {
       ok: false as const,
-      error: `No valid rows. Skipped ${skipped} (missing name or email).`,
+      error:
+        sample.length > 0
+          ? `No valid rows. ${sample}${skipped > 3 ? ` (+${skipped - 3} more)` : ""}`
+          : "No valid rows.",
     };
   }
 
@@ -233,5 +250,10 @@ export async function importLeadsCSV(formData: FormData) {
 
   revalidatePath("/admin/leads");
   revalidatePath("/admin/dashboard");
-  return { ok: true as const, inserted: inserts.length, skipped };
+  return {
+    ok: true as const,
+    inserted: inserts.length,
+    skipped,
+    rowErrors: rowErrors.slice(0, 10),
+  };
 }

@@ -14,7 +14,6 @@ const nav = [
   { href: "/admin/opportunities", label: "Opportunities" },
   { href: "/admin/campaigns", label: "Campaigns" },
   { href: "/admin/niches", label: "Niches" },
-  { href: "/admin/content", label: "Content" },
   { href: "/admin/suppression", label: "Suppression" },
 ];
 

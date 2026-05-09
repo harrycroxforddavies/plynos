@@ -1,131 +1,153 @@
-# Plynos.dev
+<p align="center">
+  <img src="public/plynos.svg" alt="Plynos" width="96" height="96">
+</p>
 
-Premium custom website service. Public landing page plus a private admin/CRM at `/admin`.
+<h1 align="center">Plynos.dev</h1>
+
+<p align="center">
+  Premium custom websites, built fast.<br>
+  Public marketing site + private admin panel for leads, opportunities, campaigns, niches and a suppression list.
+</p>
+
+<p align="center">
+  <a href="https://nextjs.org/"><img alt="Next.js" src="https://img.shields.io/badge/Next.js-14-000?logo=next.js&logoColor=white"></a>
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white">
+  <img alt="Tailwind" src="https://img.shields.io/badge/Tailwind-3-38BDF8?logo=tailwindcss&logoColor=white">
+  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-Postgres-3ECF8E?logo=supabase&logoColor=white">
+</p>
+
+---
+
+## Contents
+
+- [About](#about)
+- [Stack](#stack)
+- [Getting started](#getting-started)
+- [Environment variables](#environment-variables)
+- [Supabase setup](#supabase-setup)
+- [Email notifications](#email-notifications)
+- [Project layout](#project-layout)
+- [Scripts](#scripts)
+- [Deployment](#deployment)
+- [Security](#security)
+
+## About
+
+Plynos is a single-operator studio that builds custom websites for small and mid-sized businesses. This repo is the production marketing site and the admin tooling Harry uses to run the business.
+
+The public site is bilingual-first (six locales) and contains: the home landing, contact, blogs, presentation (cold-outreach offer page) and legal pages. The admin lives at `/admin` and is hidden from search engines.
 
 ## Stack
 
-- Next.js (App Router) + TypeScript
-- Tailwind CSS (custom Plynos tokens)
-- Supabase (Postgres, Auth, RLS) via `@supabase/ssr`
-- Plus Jakarta Sans, Lucide icons, Zod validation, framer-motion
+- **Next.js 14** (App Router) + **TypeScript** in strict mode
+- **Tailwind CSS** with custom Plynos design tokens, **Plus Jakarta Sans** via `next/font`
+- **Supabase** (Postgres + Auth + RLS) using `@supabase/ssr`
+- **Resend** for transactional new-lead notification emails (optional)
+- **framer-motion** for scroll-driven motion (`Drift`, hero bridge)
+- **lucide-react** icons, **Zod** validation, hand-rolled UI primitives
 
-## Quick start
+## Getting started
 
 ```bash
+git clone <this-repo>
+cd plynos
 npm install
-cp .env.example .env.local      # fill in the Supabase values
-npm run dev                     # http://localhost:3000
+cp .env.example .env  # if you have one; otherwise create .env (see below)
+npm run validate-env  # confirm your .env is complete
+npm run dev
 ```
 
-The public site at `/` runs without any backend. The admin at `/admin/*` requires Supabase to be configured (see below); without it the admin route shows a clear "configure Supabase" notice and refuses to render the UI.
+The dev server starts at <http://localhost:3000>.
 
 ## Environment variables
 
-| Variable | Used in | Purpose |
+Create a `.env` at the repo root:
+
+| Var | Where | Required |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SUPABASE_URL` | client + server | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | client + server | Public anon key (browser-safe; gated by RLS) |
-| `SUPABASE_SERVICE_ROLE_KEY` | **server only** | Used by `/api/leads` and `/api/unsubscribe` to write public-form submissions. Bypasses RLS. **Never** import from a `"use client"` file |
-| `RESEND_API_KEY` | server only, optional | Resend API key for new-lead email notifications. If unset, leads are still saved to Supabase but no email is sent |
-| `LEAD_NOTIFICATION_TO` | server only | Where to send the new-lead email (default: `harry@plynos.dev`) |
-| `LEAD_NOTIFICATION_FROM` | server only | Sender address. Must use a domain verified in Resend (e.g. `Plynos <leads@plynos.dev>`). Use `onboarding@resend.dev` while testing before domain verification |
-| `NEXT_PUBLIC_SITE_URL` | metadata | Canonical site URL for OpenGraph / sitemap |
+| `NEXT_PUBLIC_SITE_URL` | server + client | yes |
+| `NEXT_PUBLIC_SUPABASE_URL` | server + client | yes (for admin + lead form) |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | server + client | yes |
+| `SUPABASE_SERVICE_ROLE_KEY` | server only | yes (for `/api/leads` insert past RLS) |
+| `RESEND_API_KEY` | server only | optional |
+| `LEAD_NOTIFICATION_TO` | server only | required if Resend is used |
+| `LEAD_NOTIFICATION_FROM` | server only | required if Resend is used |
 
-## Supabase setup (one-time)
+`npm run build` runs `scripts/validate-env.mjs` automatically and refuses to build if anything required is missing or malformed.
 
-1. **Create the project** at [database.new](https://database.new). Pick the closest region.
-2. **Run the migrations** — open the SQL editor and execute these in order:
-   - [`supabase/migrations/0001_init.sql`](supabase/migrations/0001_init.sql) — every table, the `is_admin()` helper, the `on_auth_user_created` trigger that creates a `profiles` row with `role = 'admin'`, and the RLS policies that gate everything.
-   - [`supabase/migrations/0002_lead_phone.sql`](supabase/migrations/0002_lead_phone.sql) — adds the `phone` column to `leads` (idempotent; safe to re-run).
-3. **Create the admin user** in **Auth → Users → Add user → Send invite link** (or "Add user (manually)" with email+password). The trigger from step 2 will create a matching `profiles` row with `role = 'admin'`.
-4. **Confirm the role**: in **Table editor → profiles**, the row for your user should have `role = 'admin'`. If not, set it manually — the layout's role check refuses anything else.
-5. **Copy the keys** from **Settings → API**:
-   - `Project URL` → `NEXT_PUBLIC_SUPABASE_URL`
-   - `anon public` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `service_role` → `SUPABASE_SERVICE_ROLE_KEY`
-6. **Restart `npm run dev`** so Next picks up the new env vars.
+## Supabase setup
 
-After that, http://localhost:3000/admin will redirect to `/admin/login`. Sign in with the user you created in step 3.
+The admin and lead-capture flow require a Supabase project with the schema in `supabase/migrations/` applied (in order, in the SQL editor).
 
-## Email notifications (Resend)
+1. Create a Supabase project at <https://supabase.com>.
+2. Copy the project URL and anon key into `.env`.
+3. Copy the service-role key (Project Settings → API) — server only.
+4. Run every file in `supabase/migrations/` in the Supabase SQL editor, in numeric order.
+5. Create the admin user under **Auth → Users**. The `on_auth_user_created` trigger mints a `profiles` row with `role = 'admin'`.
+6. Sign in at `/admin/login`.
 
-Every lead submitted through `/contact` or the home page form is saved to Supabase. To also get an email when a new lead arrives:
+Row-level security is enabled on every table; admin access is gated by an `is_admin()` policy. The service-role key bypasses RLS only on server-only API routes.
 
-1. Sign up at [resend.com](https://resend.com) (free tier: 3,000/month, 100/day).
-2. Create an API key in **API keys** → set `RESEND_API_KEY` in `.env.local`.
-3. Set `LEAD_NOTIFICATION_TO=harry@plynos.dev` (or wherever you want them sent).
-4. Set `LEAD_NOTIFICATION_FROM` — this must be a sender on a verified domain, **otherwise emails will fail or only deliver to your own signup address**:
-   - **Testing**: `LEAD_NOTIFICATION_FROM=onboarding@resend.dev` (delivers only to the address you used to sign up).
-   - **Production**: verify `plynos.dev` in **Resend → Domains** by adding the DNS records they generate (SPF, DKIM, optional DMARC). Once verified, use `LEAD_NOTIFICATION_FROM="Plynos <leads@plynos.dev>"`.
-5. Restart `npm run dev` and submit the form. You'll get a styled HTML email with the lead's name, email, phone, industry, message, and a `Reply-To` set to the lead's address — so hitting reply replies straight to them.
+## Email notifications
 
-If any of the three Resend env vars is missing, the API silently skips the email step and the lead form still succeeds. No partial failures.
+If Resend is configured, every new lead from `/api/leads` triggers `sendLeadNotification` in `lib/mailer.ts`. The email is plain-text styled HTML with the Plynos icon, sentence-case labels, and `Reply-To` set to the lead's email so replying replies to them.
 
-## Admin auth — three layers of defence
+If `RESEND_API_KEY` is unset, the lead still saves to Supabase and the function returns `{ ok: false, reason: "not_configured" }` quietly.
 
-1. **Edge middleware** ([middleware.ts](middleware.ts)) — every request to `/admin/*` (except `/admin/login`) is checked for a session cookie. Unauthenticated requests redirect to `/admin/login` *before* any server component runs.
-2. **Server-side guard** ([lib/supabase/admin-guard.ts](lib/supabase/admin-guard.ts)) — the protected layout calls `requireAdminUser()`, which:
-   - Refuses to render if Supabase env is missing.
-   - Re-checks `auth.getUser()` (the middleware redirect could be bypassed if cookies are spoofed).
-   - Reads the user's `role` from `public.profiles` and redirects to `/admin/login?error=forbidden` if it isn't `'admin'`.
-3. **Row Level Security** — every admin-data table has policies that require `is_admin()`. Even if a session leaks somewhere, RLS prevents reads/writes for non-admin users.
+## Project layout
 
-## Architecture notes
+```
+app/                           Next.js App Router routes
+  (public marketing pages)     /, /contact, /blogs, /blogs/[slug],
+                               /presentation, /privacy, /legal,
+                               /cookies, /unsubscribe
+  admin/                       /admin/* (auth + protected layout)
+  api/                         /api/leads, /api/unsubscribe
+  robots.ts, sitemap.ts        SEO
 
-- The browser **never** receives the service-role key. Public form submissions go through `/api/leads` and `/api/unsubscribe`, which run on the Node runtime and use the service-role client (RLS-bypass) to insert.
-- The login page is **not** linked from the public navigation. It's reachable only by typing `/admin` (which redirects to `/admin/dashboard`, which the layout redirects to `/admin/login` when there's no session).
-- `robots.ts` disallows `/admin`, `/api`, and `/unsubscribe`.
+components/site/               Public site components
+components/admin/              Admin UI
+
+lib/
+  supabase/                    Server, browser and admin clients + auth guard
+  i18n/                        Six-locale dictionary + cookie-based lang
+  blogs.ts                     Hardcoded public blog posts (single source)
+  validation.ts                Zod schemas for lead capture and CSV import
+  rate-limit.ts                In-memory IP rate limiter
+  mailer.ts                    Resend transactional email
+  admin/metrics.ts             Real-time dashboard metrics
+
+types/database.ts              Supabase row types + Database type
+supabase/migrations/           SQL migrations
+public/                        Static assets (logo, blog concept SVGs)
+scripts/validate-env.mjs       Build-time env validator
+```
 
 ## Scripts
 
-```bash
-npm run dev        # local dev server
-npm run lint       # next lint
-npm run typecheck  # tsc --noEmit
-npm run build      # next build (production)
-npm run start      # serve the built app
-```
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the local dev server |
+| `npm run build` | Validate env, then `next build` |
+| `npm run start` | Run the production build |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run validate-env` | Run the env validator on its own |
 
-## Deployment (Vercel)
+## Deployment
 
-1. Push the repo to GitHub (or any git provider Vercel supports).
-2. Import into Vercel.
-3. Add the four env vars from the table above to Vercel's **Settings → Environment Variables** (Production + Preview).
-4. In your Supabase project, **Authentication → URL Configuration**, add the production domain to the allowed redirect URLs.
-5. Deploy.
+Designed for Vercel. Push the repo, set the env vars in the Vercel project, and `npm run build` will run automatically. Set `NEXT_PUBLIC_SITE_URL` to the production domain.
 
-## Public site sections
+## Security
 
-`app/page.tsx` composes:
-
-1. **Hero** — pill, big headline, dual CTAs (Request a website / Read the blogs).
-2. **HeroBridge** — dark gradient card ("Built to last. Owned by you.") with a Request-a-website pill.
-3. **Blogs teaser** — 3 latest posts; "View all ↗" links to `/blogs`.
-4. **FinalCta** — same layout as `/contact`: "Get in touch." headline + 3-field form (Name, Email, Message).
-
-Plus dedicated pages: `/contact`, `/blogs`, `/blogs/[slug]`, `/privacy`, `/legal`, `/cookies`, `/unsubscribe`.
-
-## Admin modules
-
-- `/admin/dashboard` — leads (today/7d/30d), conversion, calls booked, proposals sent, AOV, revenue 30d, campaign reply rate, leads-by-niche bar chart, recent leads table.
-- `/admin/leads` — CRUD with status pipeline. Phone column included.
-- `/admin/niches` — niche experiments with score and decision.
-- `/admin/campaigns` — outbound campaigns with editable per-row counters and reply-rate calculation.
-- `/admin/content` — blog/news/portfolio/testimonial entries with publish toggle.
-- `/admin/deals` — payment status, asset readiness, build/review/launch/handover toggles, EUR value.
-- `/admin/suppression` — unsubscribe list with one-click add/remove; lead form rejects matching emails.
-
-## Internationalisation
-
-The whole public site supports EN/ES via a cookie-based locale (see [lib/i18n/lang.ts](lib/i18n/lang.ts) and [lib/i18n/translations.ts](lib/i18n/translations.ts)). The language switcher in the header sets a `plynos-lang` cookie and calls `router.refresh()` so server components re-render with the chosen locale. Admin UI is English-only.
-
-## Security checklist
-
-- RLS enabled on every public schema table; admin-gated by `is_admin()`.
-- Service-role key never imported into client components.
-- Input validation via Zod on `/api/leads` and `/api/unsubscribe`.
-- Per-IP rate limiting on public POSTs.
-- Honeypot field on lead/contact forms.
-- Admin role re-checked server-side on every protected layout render.
-- Suppression-list lookups happen before any new lead is stored.
+- Row Level Security on every Supabase table. Admin tables require `is_admin()`.
+- Three-layer admin auth: edge middleware redirects unauthenticated `/admin/*` requests, the protected layout calls `requireAdminUser()`, and RLS gates every table.
+- The service-role key is never imported into a `"use client"` file.
+- Public POST endpoints (`/api/leads`, `/api/unsubscribe`) are Zod-validated and per-IP rate-limited.
+- The contact form has a honeypot field.
+- The suppression list is checked before any new lead is stored.
 - `robots.ts` disallows `/admin`, `/api`, and `/unsubscribe`.
+
+---
+
+<sub>Operated by Harry Davies. All rights reserved.</sub>

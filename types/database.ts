@@ -20,8 +20,6 @@ export type LeadSource =
 export type NicheDecision = "testing" | "narrow" | "kill" | "keep";
 export type OpportunityStatus = "open" | "won" | "lost";
 export type OpportunityPaymentStatus = "unpaid" | "deposit" | "paid" | "refunded";
-export type ContentType = "blog" | "news" | "portfolio" | "testimonial";
-
 export interface Profile {
   id: string;
   email: string | null;
@@ -101,18 +99,6 @@ export interface Opportunity {
   notes: string | null;
 }
 
-export interface ContentPost {
-  id: string;
-  created_at: string;
-  type: ContentType;
-  title: string;
-  slug: string;
-  excerpt: string | null;
-  body: string | null;
-  cover_url: string | null;
-  published: boolean;
-}
-
 export interface Unsubscribe {
   id: string;
   created_at: string;
@@ -137,7 +123,6 @@ export interface Database {
       campaigns: TableDef<Campaign>;
       touchpoints: TableDef<Touchpoint>;
       opportunities: TableDef<Opportunity>;
-      content_posts: TableDef<ContentPost>;
       unsubscribes: TableDef<Unsubscribe>;
     };
     Views: Record<string, never>;

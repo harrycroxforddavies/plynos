@@ -6,16 +6,26 @@ import { rateLimit } from "@/lib/rate-limit";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const schema = z.object({
+const postSchema = z.object({
   email: z.string().email().max(200),
   reason: z.string().max(400).optional().nullable(),
   source: z.string().max(80).optional().nullable(),
 });
 
-async function handle(email: string, reason?: string | null, source?: string | null) {
+const getQuerySchema = z.object({
+  email: z.string().email("Invalid email").max(200),
+  reason: z.string().max(400).optional().nullable(),
+  source: z.string().max(80).optional().nullable(),
+});
+
+async function record(
+  email: string,
+  reason?: string | null,
+  source?: string | null
+): Promise<{ ok: true; stored: boolean } | { ok: false; error: string }> {
   const supabase = createSupabaseAdminClient();
   if (!supabase) {
-    return NextResponse.json({ ok: true, stored: false });
+    return { ok: true, stored: false };
   }
 
   const normalised = email.trim().toLowerCase();
@@ -23,29 +33,21 @@ async function handle(email: string, reason?: string | null, source?: string | n
   const { error } = await supabase
     .from("unsubscribes")
     .upsert(
-      {
-        email: normalised,
-        reason: reason ?? null,
-        source: source ?? "manual",
-      },
+      { email: normalised, reason: reason ?? null, source: source ?? "manual" },
       { onConflict: "email" }
     );
 
   if (error) {
     console.error("[/api/unsubscribe] upsert failed", error);
-    return NextResponse.json(
-      { error: "Could not record unsubscribe. Please try again." },
-      { status: 500 }
-    );
+    return { ok: false, error: "Could not record unsubscribe. Please try again." };
   }
 
-  // Best-effort: mark any existing leads as unsubscribed.
   await supabase
     .from("leads")
     .update({ status: "unsubscribed" })
     .eq("email", normalised);
 
-  return NextResponse.json({ ok: true, stored: true });
+  return { ok: true, stored: true };
 }
 
 export async function POST(request: Request) {
@@ -67,24 +69,46 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const parsed = schema.safeParse(body);
+  const parsed = postSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "Invalid input" }, { status: 400 });
   }
 
-  return handle(parsed.data.email, parsed.data.reason, parsed.data.source);
+  const result = await record(parsed.data.email, parsed.data.reason, parsed.data.source);
+  if (!result.ok) {
+    return NextResponse.json({ error: result.error }, { status: 500 });
+  }
+  return NextResponse.json({ ok: true, stored: result.stored });
 }
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const email = url.searchParams.get("email");
-  const reason = url.searchParams.get("reason");
-  const source = url.searchParams.get("source");
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
 
-  const parsed = schema.safeParse({ email, reason, source });
-  if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid email" }, { status: 400 });
+  const limit = rateLimit(`unsub:${ip}`, 10, 60_000);
+  if (!limit.ok) {
+    return NextResponse.redirect(new URL("/unsubscribe", url), 303);
   }
 
-  return handle(parsed.data.email, parsed.data.reason, parsed.data.source ?? "link");
+  const parsed = getQuerySchema.safeParse({
+    email: url.searchParams.get("email"),
+    reason: url.searchParams.get("reason"),
+    source: url.searchParams.get("source"),
+  });
+
+  if (!parsed.success) {
+    return NextResponse.redirect(new URL("/unsubscribe", url), 303);
+  }
+
+  const result = await record(
+    parsed.data.email,
+    parsed.data.reason,
+    parsed.data.source ?? "link"
+  );
+
+  const next = new URL("/unsubscribe", url);
+  next.searchParams.set("email", parsed.data.email);
+  if (result.ok) next.searchParams.set("status", "ok");
+  return NextResponse.redirect(next, 303);
 }

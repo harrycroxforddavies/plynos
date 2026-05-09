@@ -45,12 +45,11 @@ export default function BlogsIndex() {
                 <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-plynos-navy/10 dark:border-white/10">
                   <Image
                     src={p.image}
-                    alt=""
+                    alt={localize(p.title, lang)}
                     width={500}
                     height={500}
                     unoptimized
                     className="h-full w-full object-cover transition group-hover:scale-[1.02]"
-                    aria-hidden
                   />
                 </div>
                 <div className="flex flex-col items-start justify-center">

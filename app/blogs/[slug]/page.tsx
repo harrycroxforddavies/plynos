@@ -61,11 +61,10 @@ export default function BlogPostPage({
             <div className="relative aspect-square w-full">
               <Image
                 src={post.image}
-                alt=""
+                alt={localize(post.title, lang)}
                 fill
                 unoptimized
                 className="object-contain"
-                aria-hidden
               />
             </div>
           </div>
