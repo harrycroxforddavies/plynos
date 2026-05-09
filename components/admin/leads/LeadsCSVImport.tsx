@@ -46,7 +46,7 @@ export function LeadsCSVImport() {
         onClick={pick}
         disabled={pending}
         title="CSV columns: name (required), email (required), phone, company, industry, goal, source, status, notes, website"
-        className="inline-flex items-center gap-2 rounded-full border border-plynos-navy/20 bg-white px-4 py-2 text-sm font-medium text-plynos-navy transition hover:border-plynos-navy/40 disabled:opacity-60 dark:border-white/30 dark:bg-transparent dark:text-white dark:hover:border-white"
+        className="btn-secondary disabled:opacity-60"
       >
         {pending ? (
           <Loader2 className="h-4 w-4 animate-spin" aria-hidden />

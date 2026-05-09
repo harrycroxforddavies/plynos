@@ -99,6 +99,29 @@ type UI = {
     successBody: string;
     successAction: string;
   };
+  presentation: {
+    pill: string;
+    headline: string;
+    subhead: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+    whyEyebrow: string;
+    whyHeadline: string;
+    why: { title: string; body: string }[];
+    howEyebrow: string;
+    howHeadline: string;
+    how: { step: string; title: string; body: string }[];
+    investmentEyebrow: string;
+    investmentPrice: string;
+    investmentSuffix: string;
+    investmentHeadline: string;
+    investmentBody: string;
+    investmentTerms: string;
+    investmentCta: string;
+    closingHeadline: string;
+    closingBody: string;
+    closingCta: string;
+  };
 };
 
 const en_gb: UI = {
@@ -207,6 +230,66 @@ const en_gb: UI = {
     successBody:
       "We'll come back to you by email within one business day, usually much sooner.",
     successAction: "Send another message",
+  },
+  presentation: {
+    pill: "For trades and small operators",
+    headline: "A website built for the work you do.",
+    subhead:
+      "Plumbers, sparks, builders, fitters, gardeners. A clean site that puts your number in front of the next job.",
+    ctaPrimary: "Get in touch",
+    ctaSecondary: "See how we work",
+    whyEyebrow: "Why a website pays off",
+    whyHeadline: "It earns its keep on day one.",
+    why: [
+      {
+        title: "Found when they search",
+        body: "Someone Googles your trade and your town. Your number comes up. No hunting for a Facebook page that hasn't been touched in two years.",
+      },
+      {
+        title: "Looks like a proper business",
+        body: "Tidy van, tidy work, tidy site. Customers decide in seconds whether to call you or the next name on the list.",
+      },
+      {
+        title: "One tap to call you",
+        body: "Phone, WhatsApp, route to the job. Big buttons on the phone, where they're already standing.",
+      },
+    ],
+    howEyebrow: "How we work",
+    howHeadline: "Four steps from brief to live.",
+    how: [
+      {
+        step: "01",
+        title: "Brief",
+        body: "A short call. What you do, who you do it for, what makes you the one to call.",
+      },
+      {
+        step: "02",
+        title: "Build",
+        body: "First draft within a few days. Mobile-first, written in plain language, every page nudges towards the call.",
+      },
+      {
+        step: "03",
+        title: "Tweak",
+        body: "One round of changes. Get the words right, swap a photo, move a button. Sign-off when you're happy.",
+      },
+      {
+        step: "04",
+        title: "Live",
+        body: "Domain sorted, site online, fully owned by you. No retainer, no lock-in.",
+      },
+    ],
+    investmentEyebrow: "Investment",
+    investmentPrice: "From €300",
+    investmentSuffix: "+ VAT",
+    investmentHeadline: "One page. One price. Yours when it ships.",
+    investmentBody:
+      "A single landing page, designed and built around the work you do and the call you want. Hosting and domain handled, fully owned by you.",
+    investmentTerms: "Half to start. Half on launch.",
+    investmentCta: "Start your build",
+    closingHeadline: "Ready to be the one they call?",
+    closingBody:
+      "Send a few details. We'll come back to you the same day, usually within an hour or two.",
+    closingCta: "Get in touch",
   },
 };
 
@@ -317,6 +400,66 @@ const en_us: UI = {
       "We'll come back to you by email within one business day, usually much sooner.",
     successAction: "Send another message",
   },
+  presentation: {
+    pill: "For trades and small operators",
+    headline: "A website built for the work you do.",
+    subhead:
+      "Plumbers, electricians, builders, fitters, landscapers. A clean site that puts your number in front of the next job.",
+    ctaPrimary: "Get in touch",
+    ctaSecondary: "See how we work",
+    whyEyebrow: "Why a website pays off",
+    whyHeadline: "It earns its keep on day one.",
+    why: [
+      {
+        title: "Found when they search",
+        body: "Someone Googles your trade and your town. Your number comes up. No hunting for a Facebook page that hasn't been touched in two years.",
+      },
+      {
+        title: "Looks like a real business",
+        body: "Tidy truck, tidy work, tidy site. Customers decide in seconds whether to call you or the next name on the list.",
+      },
+      {
+        title: "One tap to call you",
+        body: "Phone, text, directions to the job. Big buttons on the phone, where they're already standing.",
+      },
+    ],
+    howEyebrow: "How we work",
+    howHeadline: "Four steps from brief to live.",
+    how: [
+      {
+        step: "01",
+        title: "Brief",
+        body: "A short call. What you do, who you do it for, what makes you the one to call.",
+      },
+      {
+        step: "02",
+        title: "Build",
+        body: "First draft within a few days. Mobile-first, written in plain language, every page nudges towards the call.",
+      },
+      {
+        step: "03",
+        title: "Tweak",
+        body: "One round of changes. Get the words right, swap a photo, move a button. Sign-off when you're happy.",
+      },
+      {
+        step: "04",
+        title: "Live",
+        body: "Domain sorted, site online, fully owned by you. No retainer, no lock-in.",
+      },
+    ],
+    investmentEyebrow: "Investment",
+    investmentPrice: "From €300",
+    investmentSuffix: "+ VAT",
+    investmentHeadline: "One page. One price. Yours when it ships.",
+    investmentBody:
+      "A single landing page, designed and built around the work you do and the call you want. Hosting and domain handled, fully owned by you.",
+    investmentTerms: "Half to start. Half on launch.",
+    investmentCta: "Start your build",
+    closingHeadline: "Ready to be the one they call?",
+    closingBody:
+      "Send a few details. We'll come back to you the same day, usually within an hour or two.",
+    closingCta: "Get in touch",
+  },
 };
 
 const es: UI = {
@@ -425,6 +568,66 @@ const es: UI = {
     successBody:
       "Te responderemos por email en menos de un día laborable, normalmente mucho antes.",
     successAction: "Enviar otro mensaje",
+  },
+  presentation: {
+    pill: "Para oficios y pequeños negocios",
+    headline: "Una web hecha para el trabajo que haces.",
+    subhead:
+      "Fontaneros, electricistas, albañiles, instaladores, jardineros. Una web limpia que pone tu número delante del próximo cliente.",
+    ctaPrimary: "Hablemos",
+    ctaSecondary: "Cómo trabajamos",
+    whyEyebrow: "Por qué una web vale la pena",
+    whyHeadline: "Se paga sola desde el primer día.",
+    why: [
+      {
+        title: "Te encuentran al buscar",
+        body: "Alguien busca tu oficio y tu zona en Google. Aparece tu número. Sin rebuscar en una página de Facebook que nadie ha tocado en dos años.",
+      },
+      {
+        title: "Pareces un negocio serio",
+        body: "Furgoneta cuidada, trabajo cuidado, web cuidada. El cliente decide en segundos si te llama a ti o al siguiente de la lista.",
+      },
+      {
+        title: "Un toque para llamarte",
+        body: "Teléfono, WhatsApp, ruta al trabajo. Botones grandes en el móvil, justo donde están de pie.",
+      },
+    ],
+    howEyebrow: "Cómo trabajamos",
+    howHeadline: "Cuatro pasos del briefing al lanzamiento.",
+    how: [
+      {
+        step: "01",
+        title: "Briefing",
+        body: "Una llamada corta. Qué haces, para quién, y qué te hace el primero al que llamar.",
+      },
+      {
+        step: "02",
+        title: "Construcción",
+        body: "Primer borrador en pocos días. Pensado para móvil, escrito en lenguaje claro, cada página empuja hacia la llamada.",
+      },
+      {
+        step: "03",
+        title: "Ajustes",
+        body: "Una ronda de cambios. Afinar las palabras, cambiar una foto, mover un botón. Validación cuando te encaje.",
+      },
+      {
+        step: "04",
+        title: "En vivo",
+        body: "Dominio resuelto, web en línea, totalmente tuya. Sin cuotas. Sin ataduras.",
+      },
+    ],
+    investmentEyebrow: "Inversión",
+    investmentPrice: "Desde 300€",
+    investmentSuffix: "+ IVA",
+    investmentHeadline: "Una página. Un precio. Tuya en cuanto sale.",
+    investmentBody:
+      "Una landing page, diseñada y construida en torno al trabajo que haces y la llamada que quieres. Hosting y dominio gestionados, totalmente tuya.",
+    investmentTerms: "Mitad para empezar. Mitad al lanzar.",
+    investmentCta: "Empezar tu proyecto",
+    closingHeadline: "¿Listo para ser el primero al que llamen?",
+    closingBody:
+      "Envíanos unos pocos datos. Te respondemos el mismo día, normalmente en una o dos horas.",
+    closingCta: "Hablemos",
   },
 };
 
@@ -535,6 +738,66 @@ const fr: UI = {
       "Nous vous répondrons par email dans la journée ouvrable, le plus souvent bien plus tôt.",
     successAction: "Envoyer un autre message",
   },
+  presentation: {
+    pill: "Pour les artisans et petits exploitants",
+    headline: "Un site pensé pour votre métier.",
+    subhead:
+      "Plombiers, électriciens, maçons, installateurs, paysagistes. Un site propre qui met votre numéro devant le prochain client.",
+    ctaPrimary: "Nous contacter",
+    ctaSecondary: "Notre méthode",
+    whyEyebrow: "Pourquoi un site",
+    whyHeadline: "Il est rentable dès le premier jour.",
+    why: [
+      {
+        title: "Visible quand on vous cherche",
+        body: "On tape votre métier et votre ville sur Google. Votre numéro sort. Plus besoin de fouiller une page Facebook abandonnée depuis deux ans.",
+      },
+      {
+        title: "L'allure d'une vraie entreprise",
+        body: "Camionnette propre, travail propre, site propre. Le client choisit en quelques secondes entre vous et le suivant sur la liste.",
+      },
+      {
+        title: "Un toucher pour vous joindre",
+        body: "Téléphone, WhatsApp, itinéraire jusqu'au chantier. De gros boutons sur le mobile, là où il est déjà.",
+      },
+    ],
+    howEyebrow: "Comment on travaille",
+    howHeadline: "Quatre étapes du brief à la mise en ligne.",
+    how: [
+      {
+        step: "01",
+        title: "Brief",
+        body: "Un court appel. Ce que vous faites, pour qui, et ce qui fait qu'on vous appelle vous.",
+      },
+      {
+        step: "02",
+        title: "Conception",
+        body: "Première maquette en quelques jours. Mobile-first, langage simple, chaque page pousse à l'appel.",
+      },
+      {
+        step: "03",
+        title: "Ajustements",
+        body: "Une série de retours. On affine les mots, on change une photo, on déplace un bouton. Validation quand ça vous va.",
+      },
+      {
+        step: "04",
+        title: "En ligne",
+        body: "Domaine réglé, site en ligne, entièrement à vous. Sans abonnement. Sans engagement.",
+      },
+    ],
+    investmentEyebrow: "Investissement",
+    investmentPrice: "À partir de 300€",
+    investmentSuffix: "+ TVA",
+    investmentHeadline: "Une page. Un prix. À vous dès la mise en ligne.",
+    investmentBody:
+      "Une page d'accueil, conçue autour du travail que vous faites et de l'appel que vous visez. Hébergement et domaine gérés, entièrement à vous.",
+    investmentTerms: "Moitié pour démarrer. Moitié au lancement.",
+    investmentCta: "Démarrer le projet",
+    closingHeadline: "Prêt à être celui qu'on appelle ?",
+    closingBody:
+      "Envoyez quelques détails. Nous revenons vers vous dans la journée, le plus souvent en une heure ou deux.",
+    closingCta: "Nous contacter",
+  },
 };
 
 const nl: UI = {
@@ -644,6 +907,66 @@ const nl: UI = {
       "We komen binnen één werkdag per email bij je terug, meestal veel sneller.",
     successAction: "Stuur nog een bericht",
   },
+  presentation: {
+    pill: "Voor vakmensen en kleine ondernemers",
+    headline: "Een website gebouwd voor het werk dat je doet.",
+    subhead:
+      "Loodgieters, elektriciens, bouwers, installateurs, hoveniers. Een schone site die jouw nummer voor de volgende klus zet.",
+    ctaPrimary: "Neem contact op",
+    ctaSecondary: "Zo werken we",
+    whyEyebrow: "Waarom een website loont",
+    whyHeadline: "Vanaf dag één betaalt het zich terug.",
+    why: [
+      {
+        title: "Te vinden als ze zoeken",
+        body: "Iemand zoekt je vak en je plaats op Google. Jouw nummer komt boven. Geen gedoe met een Facebook-pagina die twee jaar stil ligt.",
+      },
+      {
+        title: "Oogt als een echte zaak",
+        body: "Schone bus, schoon werk, schone site. De klant kiest in seconden tussen jou en de volgende op de lijst.",
+      },
+      {
+        title: "Eén tik om te bellen",
+        body: "Telefoon, WhatsApp, route naar de klus. Grote knoppen op de telefoon, precies waar de klant al staat.",
+      },
+    ],
+    howEyebrow: "Zo werken we",
+    howHeadline: "Vier stappen van briefing tot live.",
+    how: [
+      {
+        step: "01",
+        title: "Briefing",
+        body: "Een kort gesprek. Wat je doet, voor wie, en wat jou de eerste keuze maakt.",
+      },
+      {
+        step: "02",
+        title: "Bouwen",
+        body: "Eerste opzet binnen een paar dagen. Mobiel-eerst, in gewone taal, elke pagina stuurt naar het gesprek.",
+      },
+      {
+        step: "03",
+        title: "Bijschaven",
+        body: "Eén ronde aanpassingen. Woorden bijslijpen, foto wisselen, knop verplaatsen. Akkoord als jij tevreden bent.",
+      },
+      {
+        step: "04",
+        title: "Live",
+        body: "Domein geregeld, site online, volledig van jou. Geen abonnement. Geen lock-in.",
+      },
+    ],
+    investmentEyebrow: "Investering",
+    investmentPrice: "Vanaf €300",
+    investmentSuffix: "+ btw",
+    investmentHeadline: "Eén pagina. Eén prijs. Van jou zodra hij live staat.",
+    investmentBody:
+      "Eén landingspagina, ontworpen rond het werk dat je doet en het gesprek dat je wilt. Hosting en domein geregeld, volledig van jou.",
+    investmentTerms: "De helft om te starten. De helft bij oplevering.",
+    investmentCta: "Start je project",
+    closingHeadline: "Klaar om degene te zijn die ze bellen?",
+    closingBody:
+      "Stuur een paar details. We komen dezelfde dag bij je terug, meestal binnen één of twee uur.",
+    closingCta: "Neem contact op",
+  },
 };
 
 const de: UI = {
@@ -752,6 +1075,66 @@ const de: UI = {
     successBody:
       "Wir antworten per E-Mail innerhalb eines Werktags, in der Regel deutlich schneller.",
     successAction: "Weitere Nachricht senden",
+  },
+  presentation: {
+    pill: "Für Handwerk und kleine Betriebe",
+    headline: "Eine Website, gebaut für Ihre Arbeit.",
+    subhead:
+      "Installateure, Elektriker, Bauleute, Monteure, Gärtner. Eine saubere Seite, die Ihre Nummer vor den nächsten Auftrag stellt.",
+    ctaPrimary: "Kontakt aufnehmen",
+    ctaSecondary: "So arbeiten wir",
+    whyEyebrow: "Warum sich eine Website lohnt",
+    whyHeadline: "Sie zahlt sich vom ersten Tag an aus.",
+    why: [
+      {
+        title: "Gefunden, wenn man sucht",
+        body: "Jemand googelt Ihr Gewerk und Ihren Ort. Ihre Nummer kommt oben. Kein Suchen nach einer Facebook-Seite, die seit zwei Jahren niemand angefasst hat.",
+      },
+      {
+        title: "Wirkt wie ein echter Betrieb",
+        body: "Sauberer Wagen, saubere Arbeit, saubere Seite. Der Kunde entscheidet in Sekunden zwischen Ihnen und dem Nächsten auf der Liste.",
+      },
+      {
+        title: "Ein Tipp, und Sie sind dran",
+        body: "Telefon, WhatsApp, Route zur Baustelle. Große Knöpfe auf dem Handy, dort wo der Kunde gerade steht.",
+      },
+    ],
+    howEyebrow: "So arbeiten wir",
+    howHeadline: "Vier Schritte vom Briefing bis live.",
+    how: [
+      {
+        step: "01",
+        title: "Briefing",
+        body: "Ein kurzer Anruf. Was Sie tun, für wen, und warum man Sie ruft.",
+      },
+      {
+        step: "02",
+        title: "Bauen",
+        body: "Erster Entwurf in wenigen Tagen. Mobile-first, klare Sprache, jede Seite führt zum Anruf.",
+      },
+      {
+        step: "03",
+        title: "Feinschliff",
+        body: "Eine Runde Änderungen. Worte schärfen, Foto tauschen, Button verschieben. Freigabe, wenn es passt.",
+      },
+      {
+        step: "04",
+        title: "Live",
+        body: "Domain geklärt, Seite online, vollständig in Ihrem Besitz. Keine Abogebühr. Keine Bindung.",
+      },
+    ],
+    investmentEyebrow: "Investition",
+    investmentPrice: "Ab 300€",
+    investmentSuffix: "+ MwSt.",
+    investmentHeadline: "Eine Seite. Ein Preis. Ihnen, sobald sie live ist.",
+    investmentBody:
+      "Eine Landingpage, gestaltet und gebaut rund um Ihre Arbeit und den Anruf, den Sie wollen. Hosting und Domain übernommen, vollständig Ihre.",
+    investmentTerms: "Hälfte zum Start. Hälfte zum Launch.",
+    investmentCta: "Projekt starten",
+    closingHeadline: "Bereit, der zu sein, den man anruft?",
+    closingBody:
+      "Schicken Sie ein paar Eckdaten. Wir melden uns am selben Tag, meist innerhalb von ein, zwei Stunden.",
+    closingCta: "Kontakt aufnehmen",
   },
 };
 

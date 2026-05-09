@@ -4,7 +4,7 @@
 Plynos.dev is a premium custom website service. The public site sells custom websites built fast (no specific delivery-window claim — older drafts said "24 hours", that framing has been removed across the public copy and should not be reintroduced). The admin at `/admin` tracks leads, niche experiments, campaigns, opportunities, content, and a suppression list. Operated by Harry Davies.
 
 ## Non-negotiables
-- Do not show prices publicly.
+- The only public page that names a price is `/presentation` (the blue-collar landing offer at "From €300"). Don't surface prices anywhere else — home, blogs, contact, hero, bridge, etc. stay price-free.
 - Do not describe the offer as templates. Plynos = custom-built.
 - Do not reintroduce the "built in 24 hours" claim. The current copy says "built fast" without committing to a specific timeline.
 - Do not add public navigation to `/admin`.
@@ -73,13 +73,15 @@ Avoid:
 3. `Blogs` — light teaser of three posts; "View all ↗" links to `/blogs`.
 4. `FinalCta` — same content as `/contact`: "Get in touch." headline, three-field `ContactForm`.
 
-Plus dedicated routes: `/contact`, `/blogs`, `/blogs/[slug]`, `/privacy`, `/legal`, `/cookies`, `/unsubscribe`.
+Plus dedicated routes: `/contact`, `/blogs`, `/blogs/[slug]`, `/presentation`, `/privacy`, `/legal`, `/cookies`, `/unsubscribe`.
+
+`/presentation` is a single-page offer landing, aimed at blue-collar businesses (plumbers, electricians, builders, etc.). It is the only public page that quotes a price ("From €300") and is the destination for cold outreach to that segment. Headline copy ("A website built for the work you do.") and structure (hero → why → how we work → investment callout → closing CTA) are intentionally minimalist; the page uses the existing `Drift`, `SiteHeader`, `SiteFooter`, and `container-page` primitives so it stays visually consistent with the rest of the public site. There is no public nav link to it — it lives off direct outreach links.
 
 ## Admin
 
-The admin panel lives at `/admin/*` and is being refactored over multiple phases. **Always read [docs/admin/](docs/admin/) before changing admin code** — the plan, conventions, and phase status all live there.
+The admin panel lives at `/admin/*`. There is no separate admin design doc — the rules below plus the code itself are the source of truth.
 
-Key admin rules (reflecting current Phase 1+ state):
+Key admin rules:
 - The route is `/admin/opportunities`. The DB table is `opportunities` (renamed from `deals` in migration `0003_rename_deals_to_opportunities.sql`); the TypeScript type is `Opportunity`.
 - "Industry" is the user-facing label for what the DB calls `niche` (the column on `leads`). The internal experiment-tracking module is still called "Niches".
 - Sidebar nav is **text-only** — no `lucide-react` icons next to nav labels. Functional icons (chevron, X, search glass, loader spinner) are still allowed where they actually convey meaning.
