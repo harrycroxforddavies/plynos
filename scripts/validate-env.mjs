@@ -2,6 +2,9 @@
 // Fails the build if required env vars are missing or malformed.
 // Run automatically via the `prebuild` npm hook.
 
+import fs from "node:fs";
+import path from "node:path";
+
 const REQUIRED = [
   {
     name: "NEXT_PUBLIC_SITE_URL",
@@ -28,8 +31,6 @@ const GROUPS = [
 function loadDotEnv() {
   // Minimal .env loader so this script works without `dotenv` installed.
   // Next.js loads .env at build time anyway; this is just for the prebuild step.
-  const fs = require("node:fs");
-  const path = require("node:path");
   const file = path.join(process.cwd(), ".env");
   if (!fs.existsSync(file)) return;
   const text = fs.readFileSync(file, "utf8");
