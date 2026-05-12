@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Drift } from "./Drift";
 import { getLang } from "@/lib/i18n/lang";
 import { t } from "@/lib/i18n/translations";
 
@@ -8,8 +7,7 @@ export function HeroBridge() {
   return (
     <section className="bg-white py-12 transition-colors md:py-16 lg:py-20 dark:bg-plynos-navy">
       <div className="container-page">
-        <Drift>
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B1220] via-[#1c2535] to-[#5B6472] px-6 py-24 text-center text-white md:rounded-[2rem] md:px-12 md:py-32 lg:py-40">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B1220] via-[#1c2535] to-[#5B6472] px-6 py-24 text-center text-white md:rounded-[2rem] md:px-12 md:py-32 lg:py-40">
             <div
               className="pointer-events-none absolute inset-0 opacity-50"
               aria-hidden
@@ -32,9 +30,8 @@ export function HeroBridge() {
               >
                 {ui.bridge.cta}
               </Link>
-            </div>
           </div>
-        </Drift>
+        </div>
       </div>
     </section>
   );

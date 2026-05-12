@@ -97,7 +97,7 @@ function line(label: string, value: string | null) {
 
 function renderHtml(l: LeadEmailPayload): string {
   return `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#0B1220;font-size:15px;line-height:1.6;max-width:600px;margin:0;padding:16px;">
-<img src="${siteUrl()}/plynos.svg" alt="" width="56" height="56" style="display:block;width:56px;height:56px;margin:0 0 24px 0;border:0;">
+<img src="${siteUrl()}/logos/plynos.svg" alt="" width="56" height="56" style="display:block;width:56px;height:56px;margin:0 0 24px 0;border:0;">
 
 <p style="margin:0 0 16px 0;">New lead just came in.</p>
 

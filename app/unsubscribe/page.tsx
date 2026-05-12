@@ -24,7 +24,7 @@ export default function UnsubscribePage({
       <header className="px-6 py-6 md:px-10">
         <Link href="/" aria-label="Plynos home" className="inline-flex items-center">
           <Image
-            src="/plynos.svg"
+            src="/logos/plynos.svg"
             alt="Plynos"
             width={32}
             height={32}

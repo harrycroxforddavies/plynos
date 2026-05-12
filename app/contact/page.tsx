@@ -1,7 +1,6 @@
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { ContactForm } from "@/components/site/ContactForm";
-import { Drift } from "@/components/site/Drift";
 import { getLang } from "@/lib/i18n/lang";
 import { t } from "@/lib/i18n/translations";
 
@@ -21,14 +20,12 @@ export default function ContactPage() {
       <main className="bg-white transition-colors dark:bg-plynos-navy">
         <section className="container-page py-24 md:py-32 lg:py-40">
           <div className="mx-auto max-w-2xl">
-            <Drift>
-              <h1 className="text-balance text-3xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-5xl dark:text-white">
-                {c.headline}
-              </h1>
-              <p className="mt-6 max-w-xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
-                {c.subhead}
-              </p>
-            </Drift>
+            <h1 className="text-balance text-3xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-5xl dark:text-white">
+              {c.headline}
+            </h1>
+            <p className="mt-6 max-w-xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
+              {c.subhead}
+            </p>
 
             <div className="mt-12 md:mt-16">
               <ContactForm strings={c} />

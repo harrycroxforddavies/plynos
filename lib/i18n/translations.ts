@@ -142,7 +142,7 @@ const en_gb: UI = {
   },
   hero: {
     pill: "Available for custom builds",
-    headline: "A custom website for your business, built fast.",
+    headline: "A custom website for your business, built in 2 days.",
     subhead: "No template feel. Clean handover, fully owned by you.",
     ctaPrimary: "Request a website",
     ctaSecondary: "Read the blogs",
@@ -311,7 +311,7 @@ const en_us: UI = {
   },
   hero: {
     pill: "Available for custom builds",
-    headline: "A custom website for your business, built fast.",
+    headline: "A custom website for your business, built in 2 days.",
     subhead: "No template feel. Clean handover, fully owned by you.",
     ctaPrimary: "Request a website",
     ctaSecondary: "Read the blogs",
@@ -480,7 +480,7 @@ const es: UI = {
   },
   hero: {
     pill: "Disponible para nuevos proyectos",
-    headline: "Una web a medida para tu negocio, lista en tiempo récord.",
+    headline: "Una web a medida para tu negocio, lista en 2 días.",
     subhead: "Sin plantillas. Entrega limpia, totalmente tuya.",
     ctaPrimary: "Solicitar una web",
     ctaSecondary: "Leer los artículos",
@@ -649,7 +649,7 @@ const fr: UI = {
   },
   hero: {
     pill: "Disponible pour de nouveaux projets",
-    headline: "Un site sur mesure pour votre entreprise, livré rapidement.",
+    headline: "Un site sur mesure pour votre entreprise, livré en 2 jours.",
     subhead: "Aucun rendu template. Livraison propre, entièrement à vous.",
     ctaPrimary: "Demander un site",
     ctaSecondary: "Lire les articles",
@@ -818,7 +818,7 @@ const nl: UI = {
   },
   hero: {
     pill: "Beschikbaar voor nieuwe projecten",
-    headline: "Een maatwerkwebsite voor je bedrijf, snel opgeleverd.",
+    headline: "Een maatwerkwebsite voor je bedrijf, in 2 dagen opgeleverd.",
     subhead: "Geen templategevoel. Schone overdracht, volledig van jou.",
     ctaPrimary: "Website aanvragen",
     ctaSecondary: "Lees de blogs",
@@ -987,7 +987,7 @@ const de: UI = {
   },
   hero: {
     pill: "Verfügbar für neue Projekte",
-    headline: "Eine maßgeschneiderte Website für Ihr Unternehmen, schnell gebaut.",
+    headline: "Eine maßgeschneiderte Website für Ihr Unternehmen, in 2 Tagen gebaut.",
     subhead: "Kein Template-Gefühl. Saubere Übergabe, vollständig in Ihrem Besitz.",
     ctaPrimary: "Website anfragen",
     ctaSecondary: "Zum Blog",

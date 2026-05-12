@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { Drift } from "./Drift";
 import { blogPosts, localize } from "@/lib/blogs";
 import { getLang } from "@/lib/i18n/lang";
 import { t } from "@/lib/i18n/translations";
@@ -14,7 +13,7 @@ export function Blogs() {
   return (
     <section id="blogs" className="section bg-white transition-colors dark:bg-plynos-navy">
       <div className="container-page">
-        <Drift className="grid gap-10 md:grid-cols-[1fr,auto] md:items-end">
+        <div className="grid gap-10 md:grid-cols-[1fr,auto] md:items-end">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-plynos-navy/10 bg-white px-3 py-1 text-xs font-medium text-plynos-slate shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:shadow-none">
               {ui.eyebrow}
@@ -29,7 +28,7 @@ export function Blogs() {
           >
             {ui.viewAll} <ArrowUpRight className="h-4 w-4" />
           </Link>
-        </Drift>
+        </div>
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {featured.map((p) => (

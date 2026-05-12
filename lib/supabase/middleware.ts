@@ -43,7 +43,11 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (isLoginRoute && user) {
+  // Auto-bounce signed-in users from the login page to the dashboard, but
+  // not when they arrived with ?error=forbidden — that means the protected
+  // layout just kicked them out for not being an admin, and bouncing them
+  // back would loop. Let the login page render with the forbidden notice.
+  if (isLoginRoute && user && !request.nextUrl.searchParams.has("error")) {
     return NextResponse.redirect(new URL("/admin/dashboard", request.url));
   }
 

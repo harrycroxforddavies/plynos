@@ -6,7 +6,7 @@ Plynos.dev is a premium custom website service. The public site sells custom web
 ## Non-negotiables
 - The only public page that names a price is `/presentation` (the blue-collar landing offer at "From €300"). Don't surface prices anywhere else — home, blogs, contact, hero, bridge, etc. stay price-free.
 - Do not describe the offer as templates. Plynos = custom-built.
-- Do not reintroduce the "built in 24 hours" claim. The current copy says "built fast" without committing to a specific timeline.
+- The committed delivery window is two days. The current copy says "built in 2 days". Do not reintroduce the older "24 hours" or "next-day" claims, and do not weaken back to the vague "built fast" line.
 - Do not add public navigation to `/admin`.
 - Do not expose `SUPABASE_SERVICE_ROLE_KEY` in browser code (or any `"use client"` file).
 - Admin must require Supabase Auth — no demo-mode bypass.
@@ -18,7 +18,6 @@ Plynos.dev is a premium custom website service. The public site sells custom web
 - **Plus Jakarta Sans** via `next/font/google` — the only font
 - **Supabase** (Postgres, Auth, RLS) via `@supabase/ssr`. Row types are hand-rolled in `types/database.ts`. The Supabase clients are not yet wired to the `Database` generic — that requires `supabase gen types typescript` output, not the hand-rolled shape, since recent postgrest-js generics are incompatible with manually written `TableDef`s.
 - **Resend** for transactional new-lead notification emails (optional — gracefully no-ops if unconfigured)
-- **framer-motion** for the scroll-driven `Drift` parallax wrapper and the dark hero-bridge effect
 - **lucide-react** icons
 - **Zod** validation
 - Hand-rolled UI primitives (no shadcn dependency)
@@ -34,7 +33,7 @@ Plynos.dev is a premium custom website service. The public site sells custom web
 
 ## Writing style
 Direct, confident, lower-key. Prefer:
-- "A custom website for your business, built fast."
+- "A custom website for your business, built in 2 days."
 - "No template feel. Clean handover, fully owned by you."
 - "Built to last. Owned by you."
 - "Get in touch."
@@ -44,7 +43,7 @@ Avoid:
 - Em-dashes (`—`) and en-dashes (`–`) in new copy. The codebase has been scrubbed; use a period or comma.
 - Generic agency phrasing ("digital transformation solutions", "leverage cutting-edge technology", "affordable websites").
 - Templates language. Plynos is not a template seller.
-- Specific delivery-window claims ("24 hours", "next-day", etc.).
+- Older delivery-window claims ("24 hours", "next-day", etc.) — the committed window is "2 days".
 
 ## Internationalisation
 - The whole public site is multilingual via a cookie-based locale.

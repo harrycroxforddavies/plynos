@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { Drift } from "@/components/site/Drift";
 import { blogPosts, localize } from "@/lib/blogs";
 import { getLang } from "@/lib/i18n/lang";
 import { t } from "@/lib/i18n/translations";
@@ -24,14 +23,12 @@ export default function BlogsIndex() {
       <main className="bg-white transition-colors dark:bg-plynos-navy">
         <section className="container-page py-20 md:py-28">
           <div className="max-w-3xl">
-            <Drift>
-              <h1 className="text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl dark:text-white">
-                {ui.headline}
-              </h1>
-              <p className="mt-5 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
-                {ui.subhead}
-              </p>
-            </Drift>
+            <h1 className="text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl dark:text-white">
+              {ui.headline}
+            </h1>
+            <p className="mt-5 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
+              {ui.subhead}
+            </p>
           </div>
 
           <div className="mt-16 space-y-10 md:mt-24 md:space-y-14">

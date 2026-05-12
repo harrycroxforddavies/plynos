@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { Drift } from "@/components/site/Drift";
 import { getLang } from "@/lib/i18n/lang";
 import { t } from "@/lib/i18n/translations";
 
 export const metadata = {
   title: "A website built for the work you do",
   description:
-    "A clean landing page for trades and small operators, from €300. Built fast, fully owned by you.",
+    "A clean landing page for trades and small operators, from €300. Built in 2 days, fully owned by you.",
 };
 
 export default function PresentationPage() {
@@ -26,7 +25,7 @@ export default function PresentationPage() {
             aria-hidden
           />
           <div className="container-page pt-24 pb-20 md:pt-40 md:pb-28 lg:pt-52 lg:pb-32">
-            <Drift className="mx-auto max-w-3xl text-center" intensity={36}>
+            <div className="mx-auto max-w-3xl text-center">
               <span className="inline-flex items-center rounded-full border border-plynos-navy/10 bg-white px-3 py-1.5 text-xs font-medium text-plynos-slate shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:shadow-none">
                 {p.pill}
               </span>
@@ -44,21 +43,21 @@ export default function PresentationPage() {
                   {p.ctaSecondary}
                 </Link>
               </div>
-            </Drift>
+            </div>
           </div>
         </section>
 
         {/* Why */}
         <section className="border-t border-plynos-navy/10 bg-white py-20 transition-colors md:py-28 dark:border-white/10 dark:bg-plynos-navy">
           <div className="container-page">
-            <Drift className="mx-auto max-w-2xl">
+            <div className="mx-auto max-w-2xl">
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-plynos-slate dark:text-white/60">
                 {p.whyEyebrow}
               </p>
               <h2 className="mt-3 text-balance text-3xl font-semibold !leading-tight text-plynos-navy md:text-5xl dark:text-white">
                 {p.whyHeadline}
               </h2>
-            </Drift>
+            </div>
 
             <div className="mt-14 grid gap-px border border-plynos-navy/10 bg-plynos-navy/10 sm:grid-cols-3 dark:border-white/10 dark:bg-white/10">
               {p.why.map((item) => (
@@ -84,14 +83,14 @@ export default function PresentationPage() {
           className="scroll-mt-24 border-t border-plynos-navy/10 bg-white py-20 transition-colors md:py-28 dark:border-white/10 dark:bg-plynos-navy"
         >
           <div className="container-page">
-            <Drift className="mx-auto max-w-2xl">
+            <div className="mx-auto max-w-2xl">
               <p className="text-xs font-medium uppercase tracking-[0.18em] text-plynos-slate dark:text-white/60">
                 {p.howEyebrow}
               </p>
               <h2 className="mt-3 text-balance text-3xl font-semibold !leading-tight text-plynos-navy md:text-5xl dark:text-white">
                 {p.howHeadline}
               </h2>
-            </Drift>
+            </div>
 
             <ol className="mt-14 divide-y divide-plynos-navy/10 border-y border-plynos-navy/10 dark:divide-white/10 dark:border-white/10">
               {p.how.map((item) => (
@@ -117,8 +116,7 @@ export default function PresentationPage() {
         {/* Investment */}
         <section className="bg-white py-20 transition-colors md:py-28 dark:bg-plynos-navy">
           <div className="container-page">
-            <Drift>
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B1220] via-[#1c2535] to-[#5B6472] px-6 py-20 text-white md:rounded-[2rem] md:px-12 md:py-28">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0B1220] via-[#1c2535] to-[#5B6472] px-6 py-20 text-white md:rounded-[2rem] md:px-12 md:py-28">
                 <div
                   className="pointer-events-none absolute inset-0 opacity-50"
                   aria-hidden
@@ -152,14 +150,13 @@ export default function PresentationPage() {
                   </Link>
                 </div>
               </div>
-            </Drift>
           </div>
         </section>
 
         {/* Closing */}
         <section className="border-t border-plynos-navy/10 bg-white py-24 transition-colors md:py-32 dark:border-white/10 dark:bg-plynos-navy">
           <div className="container-page">
-            <Drift className="mx-auto max-w-2xl text-center">
+            <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-balance text-3xl font-semibold !leading-tight text-plynos-navy md:text-5xl dark:text-white">
                 {p.closingHeadline}
               </h2>
@@ -169,7 +166,7 @@ export default function PresentationPage() {
               <Link href="/contact" className="btn-primary mt-10">
                 {p.closingCta}
               </Link>
-            </Drift>
+            </div>
           </div>
         </section>
       </main>

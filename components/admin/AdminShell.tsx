@@ -12,10 +12,24 @@ const nav = [
   { href: "/admin/dashboard", label: "Dashboard" },
   { href: "/admin/leads", label: "Leads" },
   { href: "/admin/opportunities", label: "Opportunities" },
+  { href: "/admin/clients", label: "Clients" },
+  { href: "/admin/developments", label: "Developments" },
   { href: "/admin/campaigns", label: "Campaigns" },
   { href: "/admin/niches", label: "Niches" },
   { href: "/admin/suppression", label: "Suppression" },
+  { href: "/admin/teams", label: "Teams" },
+  { href: "/admin/finance", label: "Finance" },
+  { href: "/admin/reporting", label: "Reporting" },
+  { href: "/admin/resources", label: "Resources" },
+  { href: "/admin/ask", label: "Ask Plynos" },
+  { href: "/admin/settings", label: "Settings" },
 ];
+
+const linkBase = "rounded-md px-3 py-2 transition";
+const linkInactive =
+  "text-plynos-slate hover:bg-plynos-soft/60 hover:text-plynos-navy dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white";
+const linkActive =
+  "bg-plynos-soft text-plynos-navy dark:bg-white/10 dark:text-white";
 
 export function AdminShell({
   children,
@@ -37,6 +51,22 @@ export function AdminShell({
       router.refresh();
     }
   }
+
+  function renderLink(item: { href: string; label: string }) {
+    const active = pathname?.startsWith(item.href);
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        onClick={() => setMobileOpen(false)}
+        className={cn(linkBase, active ? linkActive : linkInactive)}
+      >
+        {item.label}
+      </Link>
+    );
+  }
+
+  const profileActive = pathname?.startsWith("/admin/profile");
 
   return (
     <div className="min-h-screen bg-white text-plynos-navy transition-colors dark:bg-plynos-navy dark:text-white">
@@ -60,32 +90,26 @@ export function AdminShell({
           </div>
 
           <nav className="mt-12 flex flex-col gap-0.5 text-sm">
-            {nav.map((item) => {
-              const active = pathname?.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "rounded-md px-3 py-2 transition",
-                    active
-                      ? "bg-plynos-soft text-plynos-navy dark:bg-white/10 dark:text-white"
-                      : "text-plynos-slate hover:bg-plynos-soft/60 hover:text-plynos-navy dark:text-white/60 dark:hover:bg-white/5 dark:hover:text-white"
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+            {nav.map(renderLink)}
           </nav>
 
-          <div className="mt-auto border-t border-plynos-navy/10 pt-6 text-xs dark:border-white/10">
-            <p className="truncate text-plynos-slate dark:text-white/60">{email ?? "Signed in"}</p>
+          <div className="mt-auto flex flex-col gap-0.5 border-t border-plynos-navy/10 pt-6 dark:border-white/10">
+            <Link
+              href="/admin/profile"
+              onClick={() => setMobileOpen(false)}
+              title={email ?? undefined}
+              className={cn(
+                linkBase,
+                "truncate",
+                profileActive ? linkActive : linkInactive
+              )}
+            >
+              {email ?? "Profile"}
+            </Link>
             <button
               type="button"
               onClick={handleSignOut}
-              className="mt-3 text-sm font-medium text-plynos-navy hover:text-plynos-blue dark:text-white dark:hover:text-plynos-soft"
+              className="mt-2 px-3 text-left text-xs text-plynos-slate hover:text-plynos-navy dark:text-white/60 dark:hover:text-white"
             >
               Sign out
             </button>

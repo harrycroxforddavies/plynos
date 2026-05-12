@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Drift } from "./Drift";
 import { getLang } from "@/lib/i18n/lang";
 import { t } from "@/lib/i18n/translations";
 
@@ -12,8 +11,8 @@ export function Hero() {
         className="absolute inset-x-0 top-0 -z-10 h-[480px] bg-gradient-to-b from-plynos-soft/70 via-white/0 to-transparent dark:from-plynos-blue/15 dark:via-transparent"
         aria-hidden
       />
-      <div className="container-page pt-24 pb-32 md:pt-40 md:pb-44 lg:pt-52 lg:pb-56">
-        <Drift className="mx-auto max-w-3xl text-center" intensity={36}>
+      <div className="container-page pt-16 pb-32 md:pt-28 md:pb-44 lg:pt-40 lg:pb-56">
+        <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center rounded-full border border-plynos-navy/10 bg-white px-3 py-1.5 text-xs font-medium text-plynos-slate shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white/70 dark:shadow-none">
             {ui.hero.pill}
           </span>
@@ -31,7 +30,7 @@ export function Hero() {
               {ui.hero.ctaSecondary}
             </Link>
           </div>
-        </Drift>
+        </div>
       </div>
     </section>
   );

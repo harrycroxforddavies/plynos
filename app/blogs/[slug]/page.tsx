@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { Drift } from "@/components/site/Drift";
 import { blogPosts, findPostBySlug, localize } from "@/lib/blogs";
 import { getLang } from "@/lib/i18n/lang";
 import { t } from "@/lib/i18n/translations";
@@ -41,20 +40,18 @@ export default function BlogPostPage({
       <main className="bg-white transition-colors dark:bg-plynos-navy">
         <article className="container-page py-20 md:py-28">
           <div className="max-w-3xl">
-            <Drift>
-              <div className="flex items-center gap-3 text-xs">
-                <span className="rounded-full border border-plynos-navy/10 bg-plynos-soft/50 px-2 py-0.5 font-medium text-plynos-slate dark:border-white/10 dark:bg-white/5 dark:text-white/70">
-                  {localize(post.tag, lang)}
-                </span>
-                <span className="text-plynos-slate dark:text-white/50">{localize(post.read, lang)}</span>
-              </div>
-              <h1 className="mt-6 text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl dark:text-white">
-                {localize(post.title, lang)}
-              </h1>
-              <p className="mt-6 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
-                {localize(post.excerpt, lang)}
-              </p>
-            </Drift>
+            <div className="flex items-center gap-3 text-xs">
+              <span className="rounded-full border border-plynos-navy/10 bg-plynos-soft/50 px-2 py-0.5 font-medium text-plynos-slate dark:border-white/10 dark:bg-white/5 dark:text-white/70">
+                {localize(post.tag, lang)}
+              </span>
+              <span className="text-plynos-slate dark:text-white/50">{localize(post.read, lang)}</span>
+            </div>
+            <h1 className="mt-6 text-balance text-4xl font-semibold !leading-tight tracking-tightish text-plynos-navy md:text-6xl dark:text-white">
+              {localize(post.title, lang)}
+            </h1>
+            <p className="mt-6 max-w-2xl text-balance text-lg text-plynos-slate md:text-xl dark:text-white/70">
+              {localize(post.excerpt, lang)}
+            </p>
           </div>
 
           <div className="mt-12 max-w-md overflow-hidden rounded-2xl border border-plynos-navy/10 md:mt-16 dark:border-white/10">

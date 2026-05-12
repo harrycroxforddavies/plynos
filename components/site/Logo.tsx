@@ -10,7 +10,7 @@ export function Logo({ className }: { className?: string }) {
       className={cn("inline-flex items-center", className)}
     >
       <Image
-        src="/plynos.svg"
+        src="/logos/plynos.svg"
         alt="Plynos"
         width={32}
         height={32}

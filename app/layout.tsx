@@ -28,11 +28,11 @@ export const metadata: Metadata = {
     template: "%s. Plynos",
   },
   description:
-    "A custom website for your business, built fast. No template feel. Clean handover.",
+    "A custom website for your business, built in 2 days. No template feel. Clean handover.",
   openGraph: {
     title: "Plynos",
     description:
-      "A custom website for your business, built fast. No template feel. Clean handover.",
+      "A custom website for your business, built in 2 days. No template feel. Clean handover.",
     url: siteUrl,
     siteName: "Plynos",
     type: "website",
@@ -41,10 +41,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Plynos",
     description:
-      "A custom website for your business, built fast. No template feel. Clean handover.",
+      "A custom website for your business, built in 2 days. No template feel. Clean handover.",
   },
   icons: {
-    icon: [{ url: "/plynos.svg", type: "image/svg+xml" }],
+    icon: [{ url: "/logos/plynos.svg", type: "image/svg+xml" }],
   },
   robots: {
     index: true,

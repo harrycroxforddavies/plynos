@@ -20,6 +20,15 @@ export type LeadSource =
 export type NicheDecision = "testing" | "narrow" | "kill" | "keep";
 export type OpportunityStatus = "open" | "won" | "lost";
 export type OpportunityPaymentStatus = "unpaid" | "deposit" | "paid" | "refunded";
+export type ClientStatus = "active" | "paused" | "archived";
+export type DevelopmentStage =
+  | "kickoff"
+  | "discovery"
+  | "design"
+  | "dev"
+  | "staging"
+  | "live"
+  | "maintenance";
 export interface Profile {
   id: string;
   email: string | null;
@@ -107,6 +116,48 @@ export interface Unsubscribe {
   reason: string | null;
 }
 
+export interface Client {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  primary_contact_name: string | null;
+  primary_contact_email: string | null;
+  primary_contact_phone: string | null;
+  country: string | null;
+  locale: string | null;
+  website_url: string | null;
+  status: ClientStatus;
+  source_lead_id: string | null;
+  source_opportunity_id: string | null;
+  notes: string | null;
+  archived_at: string | null;
+}
+
+export interface Development {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  client_id: string;
+  title: string;
+  stage: DevelopmentStage;
+  stage_changed_at: string;
+  owner_id: string | null;
+  template: string | null;
+  tech_stack: string | null;
+  domain: string | null;
+  repo_url: string | null;
+  preview_url: string | null;
+  staging_url: string | null;
+  live_url: string | null;
+  started_at: string | null;
+  expected_live_at: string | null;
+  actual_live_at: string | null;
+  progress_pct: number;
+  notes: string | null;
+  archived_at: string | null;
+}
+
 type TableDef<TRow, TInsert = Partial<TRow>, TUpdate = Partial<TRow>> = {
   Row: TRow;
   Insert: TInsert;
@@ -124,6 +175,8 @@ export interface Database {
       touchpoints: TableDef<Touchpoint>;
       opportunities: TableDef<Opportunity>;
       unsubscribes: TableDef<Unsubscribe>;
+      clients: TableDef<Client>;
+      developments: TableDef<Development>;
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
